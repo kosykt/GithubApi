@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
+import com.example.githubapi.database.AppDatabase
 import com.example.githubapi.databinding.FragmentUsersBinding
 import com.example.githubapi.model.UsersDTO
 import com.example.githubapi.network.ApiHolder
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class UsersFragment : Fragment() {
@@ -19,6 +19,7 @@ class UsersFragment : Fragment() {
     private val response = MutableLiveData<List<UsersDTO>>()
 
     private val retrofit = ApiHolder.retrofitService
+    private val database = AppDatabase.instance
 
     private val adapter by lazy { UsersFragmentAdapter() }
 
@@ -38,10 +39,16 @@ class UsersFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.usersFragmentRecycler.adapter = adapter
         lifecycleScope.launch {
-            response.value = retrofit.getUsers()
+//            response.value = retrofit.getUsers()
+            response.value = database.usersDao.getAll()
         }
-        response.observe(viewLifecycleOwner){
-            adapter.submitList(it)
+        response.observe(viewLifecycleOwner) {
+            if (!it.isNullOrEmpty()) {
+                adapter.submitList(it)
+                lifecycleScope.launch(Dispatchers.IO) {
+//                    database.usersDao.insert(it)
+                }
+            }
         }
     }
 
