@@ -14,6 +14,7 @@ import com.example.githubapi.data.network.NetworkRepositoryImpl
 import com.example.githubapi.databinding.FragmentUsersBinding
 import com.example.githubapi.domain.GetUsersUseCase
 import com.example.githubapi.domain.models.DomainUserModel
+import com.example.githubapi.utils.myNetworkStatus
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -49,11 +50,11 @@ class UsersFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.usersFragmentRecycler.adapter = adapter
 
-        lifecycleScope.launch(Dispatchers.IO) {
-            getUsersUseCase.execute(false)
+        lifecycleScope.launchWhenCreated {
+            myNetworkStatus(requireContext())
                 .distinctUntilChanged()
-                .collectLatest {
-                    response.value = it
+                .collect{
+                    observeUsers(it)
                 }
         }
 
@@ -61,6 +62,16 @@ class UsersFragment : Fragment() {
             response.collect {
                 refreshAdapter(it)
             }
+        }
+    }
+
+    private fun observeUsers(isNetworkAvailable: Boolean) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            getUsersUseCase.execute(isNetworkAvailable)
+                .distinctUntilChanged()
+                .collectLatest {
+                    response.value = it
+                }
         }
     }
 
