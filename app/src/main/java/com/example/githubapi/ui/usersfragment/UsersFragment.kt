@@ -8,10 +8,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.githubapi.data.DomainRepositoryImpl
 import com.example.githubapi.data.database.AppDatabase
+import com.example.githubapi.data.database.DatabaseRepositoryImpl
 import com.example.githubapi.data.network.ApiHolder
+import com.example.githubapi.data.network.NetworkRepositoryImpl
 import com.example.githubapi.databinding.FragmentUsersBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
 class UsersFragment : Fragment() {
@@ -20,7 +24,9 @@ class UsersFragment : Fragment() {
 
     private val retrofit = ApiHolder.retrofitService
     private val database = AppDatabase.instance
-    private val repositoryImpl = DomainRepositoryImpl(retrofit, database)
+    private val networkRepository = NetworkRepositoryImpl(retrofit)
+    private val databaseRepository = DatabaseRepositoryImpl(database)
+    private val repositoryImpl = DomainRepositoryImpl(networkRepository, databaseRepository)
 
     private val adapter by lazy { UsersFragmentAdapter() }
 
@@ -41,7 +47,11 @@ class UsersFragment : Fragment() {
         binding.usersFragmentRecycler.adapter = adapter
 
         lifecycleScope.launch(Dispatchers.IO) {
-            response.value = repositoryImpl.getUserFromNetwork()
+            repositoryImpl.getUsers(true)
+                .distinctUntilChanged()
+                .collectLatest {
+                    response.value = it
+                }
         }
 
         lifecycleScope.launchWhenStarted {

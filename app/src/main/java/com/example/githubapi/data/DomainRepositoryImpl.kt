@@ -1,30 +1,36 @@
 package com.example.githubapi.data
 
-import com.example.githubapi.data.database.AppDatabase
-import com.example.githubapi.data.network.RetrofitService
 import com.example.githubapi.data.network.model.UserDTO
 import com.example.githubapi.ui.usersfragment.DomainUserModel
 import com.example.githubapi.utils.dtoToListDomainUserModel
 import com.example.githubapi.utils.dtoToListUserEntity
 import com.example.githubapi.utils.entityToListDomainUserModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class DomainRepositoryImpl(
-    private val retrofit: RetrofitService,
-    private val database: AppDatabase,
+    private val networkRepository: NetworkRepository,
+    private val databaseRepository: DatabaseRepository,
 ) {
 
-    suspend fun getUserFromNetwork(): List<DomainUserModel> {
-        return retrofit.getUsers().let {
-            cacheUsers(it)
-            it.dtoToListDomainUserModel()
+    fun getUsers(isNetworkAvailable: Boolean): Flow<List<DomainUserModel>> {
+        return when (isNetworkAvailable) {
+            true -> {
+                networkRepository.getUsers()
+                    .map {
+                        cacheUsers(it)
+                        it.dtoToListDomainUserModel()
+                    }
+            }
+            false -> {
+                databaseRepository.getUsers().map {
+                    it.entityToListDomainUserModel()
+                }
+            }
         }
     }
 
-    suspend fun getUsersFromDataBase(): List<DomainUserModel> {
-        return database.usersDao.getAll().entityToListDomainUserModel()
-    }
-
     private suspend fun cacheUsers(models: List<UserDTO>) {
-        database.usersDao.insert(models.dtoToListUserEntity())
+        databaseRepository.insertUsers(models.dtoToListUserEntity())
     }
 }
