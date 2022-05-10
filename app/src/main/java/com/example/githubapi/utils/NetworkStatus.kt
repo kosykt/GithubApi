@@ -5,28 +5,38 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
 import androidx.core.content.getSystemService
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.flow
+import androidx.lifecycle.MutableLiveData
 import java.lang.ref.WeakReference
 
-fun networkObserver(_context: Context): Flow<Boolean> {
-    val context = WeakReference(_context)
-    val networkStatus = MutableStateFlow(false)
-    val connectivityManager = context.get()?.getSystemService<ConnectivityManager>()
-    val request = NetworkRequest.Builder().build()
-    connectivityManager?.registerNetworkCallback(
-        request,
-        object : ConnectivityManager.NetworkCallback() {
-            override fun onAvailable(network: Network) {
-                super.onAvailable(network)
-                networkStatus.value = true
-            }
+class NetworkStatus(_context: Context) {
 
-            override fun onLost(network: Network) {
-                super.onLost(network)
-                networkStatus.value = false
+    private val context = WeakReference(_context)
+    private val connectivityManager = context.get()?.getSystemService<ConnectivityManager>()
+
+    private val networkStatus = MutableLiveData<Boolean>()
+
+    fun networkObserver(): Boolean = networkStatus.value ?: false
+
+    init {
+        val request = NetworkRequest.Builder().build()
+        connectivityManager?.registerNetworkCallback(
+            request,
+            object : ConnectivityManager.NetworkCallback() {
+                override fun onAvailable(network: Network) {
+                    super.onAvailable(network)
+                    networkStatus.postValue(true)
+                }
+
+                override fun onLost(network: Network) {
+                    super.onLost(network)
+                    networkStatus.postValue(false)
+                }
+
+                override fun onUnavailable() {
+                    super.onUnavailable()
+                    networkStatus.postValue(false)
+                }
             }
-        })
-    return flow { emit(networkStatus.value) }
+        )
+    }
 }

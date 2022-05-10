@@ -5,5 +5,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface NetworkRepository {
 
-    fun getUsers(): Flow<List<UserDTO>>
+    suspend fun getUsers(): List<UserDTO>
 }

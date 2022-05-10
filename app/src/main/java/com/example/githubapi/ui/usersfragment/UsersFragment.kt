@@ -9,15 +9,18 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.githubapi.databinding.FragmentUsersBinding
 import com.example.githubapi.domain.models.DomainUserModel
-import com.example.githubapi.utils.networkObserver
+import com.example.githubapi.utils.NetworkStatus
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChanged
 
 class UsersFragment : Fragment() {
 
     private val viewModel by viewModels<UsersFragmentViewModel>()
 
     private val adapter by lazy { UsersFragmentAdapter() }
+
+    private val networkStatus by lazy {
+        NetworkStatus(requireContext())
+    }
 
     private var _binding: FragmentUsersBinding? = null
     private val binding: FragmentUsersBinding
@@ -35,13 +38,7 @@ class UsersFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.usersFragmentRecycler.adapter = adapter
 
-        lifecycleScope.launchWhenCreated {
-            networkObserver(requireContext())
-                .distinctUntilChanged()
-                .collect {
-                    viewModel.getUsers(it)
-                }
-        }
+        viewModel.getUsers(networkStatus.networkObserver())
 
         lifecycleScope.launchWhenStarted {
             viewModel.userList

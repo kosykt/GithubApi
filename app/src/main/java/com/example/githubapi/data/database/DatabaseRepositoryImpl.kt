@@ -12,7 +12,7 @@ class DatabaseRepositoryImpl(
         database.usersDao.insert(models)
     }
 
-    override fun getUsers(): Flow<List<UserEntity>> {
+    override suspend fun getUsers(): List<UserEntity> {
         return database.usersDao.getAll()
     }
 }

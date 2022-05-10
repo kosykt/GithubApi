@@ -12,21 +12,18 @@ import kotlinx.coroutines.flow.map
 class DomainRepositoryImpl(
     private val networkRepository: NetworkRepository,
     private val databaseRepository: DatabaseRepository,
-): DomainRepository {
+) : DomainRepository {
 
-    override fun getUsers(isNetworkAvailable: Boolean): Flow<List<DomainUserModel>> {
+    override suspend fun getUsers(isNetworkAvailable: Boolean): List<DomainUserModel> {
         return when (isNetworkAvailable) {
             true -> {
-                networkRepository.getUsers()
-                    .map {
-                        cacheUsers(it)
-                        it.dtoToListDomainUserModel()
-                    }
+                networkRepository.getUsers().let {
+                    cacheUsers(it)
+                    it.dtoToListDomainUserModel()
+                }
             }
             false -> {
-                databaseRepository.getUsers().map {
-                    it.entityToListDomainUserModel()
-                }
+                databaseRepository.getUsers().entityToListDomainUserModel()
             }
         }
     }

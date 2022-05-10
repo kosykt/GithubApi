@@ -5,5 +5,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface DomainRepository {
 
-    fun getUsers(isNetworkAvailable: Boolean): Flow<List<DomainUserModel>>
+    suspend fun getUsers(isNetworkAvailable: Boolean): List<DomainUserModel>
 }

@@ -12,8 +12,6 @@ import com.example.githubapi.domain.models.DomainUserModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
 class UsersFragmentViewModel : ViewModel() {
@@ -31,11 +29,7 @@ class UsersFragmentViewModel : ViewModel() {
 
     fun getUsers(isNetworkAvailable: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
-            getUsersUseCase.execute(isNetworkAvailable)
-                .distinctUntilChanged()
-                .collectLatest {
-                    _userList.value = it
-                }
+            _userList.value = getUsersUseCase.execute(isNetworkAvailable)
         }
     }
 }

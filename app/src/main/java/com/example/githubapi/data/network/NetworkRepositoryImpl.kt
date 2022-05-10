@@ -9,7 +9,7 @@ class NetworkRepositoryImpl(
     private val retrofitService: RetrofitService
 ) : NetworkRepository {
 
-    override fun getUsers(): Flow<List<UserDTO>> {
-        return flow { emit(retrofitService.getUsers()) }
+    override suspend fun getUsers(): List<UserDTO> {
+        return retrofitService.getUsers()
     }
 }
