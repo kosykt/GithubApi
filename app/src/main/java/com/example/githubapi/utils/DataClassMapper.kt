@@ -2,7 +2,7 @@ package com.example.githubapi.utils
 
 import com.example.githubapi.data.database.model.UserEntity
 import com.example.githubapi.data.network.model.UserDTO
-import com.example.githubapi.ui.usersfragment.DomainUserModel
+import com.example.githubapi.domain.models.DomainUserModel
 
 fun List<UserDTO>.dtoToListDomainUserModel() = this.map {
     DomainUserModel(

@@ -12,6 +12,8 @@ import com.example.githubapi.data.database.DatabaseRepositoryImpl
 import com.example.githubapi.data.network.ApiHolder
 import com.example.githubapi.data.network.NetworkRepositoryImpl
 import com.example.githubapi.databinding.FragmentUsersBinding
+import com.example.githubapi.domain.GetUsersUseCase
+import com.example.githubapi.domain.models.DomainUserModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -27,6 +29,7 @@ class UsersFragment : Fragment() {
     private val networkRepository = NetworkRepositoryImpl(retrofit)
     private val databaseRepository = DatabaseRepositoryImpl(database)
     private val repositoryImpl = DomainRepositoryImpl(networkRepository, databaseRepository)
+    private val getUsersUseCase = GetUsersUseCase(repositoryImpl)
 
     private val adapter by lazy { UsersFragmentAdapter() }
 
@@ -47,7 +50,7 @@ class UsersFragment : Fragment() {
         binding.usersFragmentRecycler.adapter = adapter
 
         lifecycleScope.launch(Dispatchers.IO) {
-            repositoryImpl.getUsers(true)
+            getUsersUseCase.execute(false)
                 .distinctUntilChanged()
                 .collectLatest {
                     response.value = it

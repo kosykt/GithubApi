@@ -1,4 +1,4 @@
-package com.example.githubapi.ui.usersfragment
+package com.example.githubapi.domain.models
 
 data class DomainUserModel(
     val id: String,
