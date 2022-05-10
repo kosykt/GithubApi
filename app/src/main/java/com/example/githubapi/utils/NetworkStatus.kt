@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flow
 import java.lang.ref.WeakReference
 
-fun myNetworkStatus(_context: Context): Flow<Boolean> {
+fun networkObserver(_context: Context): Flow<Boolean> {
     val context = WeakReference(_context)
     val networkStatus = MutableStateFlow(false)
     val connectivityManager = context.get()?.getSystemService<ConnectivityManager>()

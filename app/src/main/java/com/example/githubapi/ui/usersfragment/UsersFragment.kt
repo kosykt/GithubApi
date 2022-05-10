@@ -5,32 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.example.githubapi.data.DomainRepositoryImpl
-import com.example.githubapi.data.database.AppDatabase
-import com.example.githubapi.data.database.DatabaseRepositoryImpl
-import com.example.githubapi.data.network.ApiHolder
-import com.example.githubapi.data.network.NetworkRepositoryImpl
 import com.example.githubapi.databinding.FragmentUsersBinding
-import com.example.githubapi.domain.GetUsersUseCase
 import com.example.githubapi.domain.models.DomainUserModel
-import com.example.githubapi.utils.myNetworkStatus
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
+import com.example.githubapi.utils.networkObserver
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.launch
 
 class UsersFragment : Fragment() {
 
-    private val response = MutableStateFlow<List<DomainUserModel>>(emptyList())
-
-    private val retrofit = ApiHolder.retrofitService
-    private val database = AppDatabase.instance
-    private val networkRepository = NetworkRepositoryImpl(retrofit)
-    private val databaseRepository = DatabaseRepositoryImpl(database)
-    private val repositoryImpl = DomainRepositoryImpl(networkRepository, databaseRepository)
-    private val getUsersUseCase = GetUsersUseCase(repositoryImpl)
+    private val viewModel by viewModels<UsersFragmentViewModel>()
 
     private val adapter by lazy { UsersFragmentAdapter() }
 
@@ -51,27 +36,18 @@ class UsersFragment : Fragment() {
         binding.usersFragmentRecycler.adapter = adapter
 
         lifecycleScope.launchWhenCreated {
-            myNetworkStatus(requireContext())
+            networkObserver(requireContext())
                 .distinctUntilChanged()
-                .collect{
-                    observeUsers(it)
+                .collect {
+                    viewModel.getUsers(it)
                 }
         }
 
         lifecycleScope.launchWhenStarted {
-            response.collect {
+            viewModel.userList
+                .collectLatest {
                 refreshAdapter(it)
             }
-        }
-    }
-
-    private fun observeUsers(isNetworkAvailable: Boolean) {
-        lifecycleScope.launch(Dispatchers.IO) {
-            getUsersUseCase.execute(isNetworkAvailable)
-                .distinctUntilChanged()
-                .collectLatest {
-                    response.value = it
-                }
         }
     }
 
