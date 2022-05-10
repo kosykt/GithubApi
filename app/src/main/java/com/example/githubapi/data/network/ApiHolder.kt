@@ -1,4 +1,4 @@
-package com.example.githubapi.network
+package com.example.githubapi.data.network
 
 
 import retrofit2.Retrofit

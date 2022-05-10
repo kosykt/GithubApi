@@ -1,12 +1,12 @@
-package com.example.githubapi.database
+package com.example.githubapi.data.database
 
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.githubapi.App
-import com.example.githubapi.model.UsersDTO
+import com.example.githubapi.data.database.model.UserEntity
 
-@Database(entities = [UsersDTO::class], version = 1, exportSchema = false)
+@Database(entities = [UserEntity::class], version = 1, exportSchema = false)
 abstract class AppDatabase: RoomDatabase() {
 
     abstract val usersDao: UsersDao

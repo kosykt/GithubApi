@@ -1,10 +1,10 @@
-package com.example.githubapi.model
+package com.example.githubapi.data.database.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class UsersDTO(
+data class UserEntity(
     @PrimaryKey
     val id: String,
     val login: String,

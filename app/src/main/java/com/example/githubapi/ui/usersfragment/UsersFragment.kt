@@ -1,25 +1,26 @@
-package com.example.githubapi.usersfragment
+package com.example.githubapi.ui.usersfragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
-import com.example.githubapi.database.AppDatabase
+import com.example.githubapi.data.DomainRepositoryImpl
+import com.example.githubapi.data.database.AppDatabase
+import com.example.githubapi.data.network.ApiHolder
 import com.example.githubapi.databinding.FragmentUsersBinding
-import com.example.githubapi.model.UsersDTO
-import com.example.githubapi.network.ApiHolder
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 class UsersFragment : Fragment() {
 
-    private val response = MutableLiveData<List<UsersDTO>>()
+    private val response = MutableStateFlow<List<DomainUserModel>>(emptyList())
 
     private val retrofit = ApiHolder.retrofitService
     private val database = AppDatabase.instance
+    private val repositoryImpl = DomainRepositoryImpl(retrofit, database)
 
     private val adapter by lazy { UsersFragmentAdapter() }
 
@@ -38,19 +39,19 @@ class UsersFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.usersFragmentRecycler.adapter = adapter
-        lifecycleScope.launch {
-//            response.value = retrofit.getUsers()
-            response.value = database.usersDao.getAll()
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            response.value = repositoryImpl.getUserFromNetwork()
         }
-        response.observe(viewLifecycleOwner) {
-            if (!it.isNullOrEmpty()) {
-                adapter.submitList(it)
-                lifecycleScope.launch(Dispatchers.IO) {
-//                    database.usersDao.insert(it)
-                }
+
+        lifecycleScope.launchWhenStarted {
+            response.collect {
+                refreshAdapter(it)
             }
         }
     }
+
+    private fun refreshAdapter(models: List<DomainUserModel>) = adapter.submitList(models)
 
     override fun onDestroy() {
         super.onDestroy()

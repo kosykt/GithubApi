@@ -1,4 +1,4 @@
-package com.example.githubapi.usersfragment
+package com.example.githubapi.ui.usersfragment
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,15 +6,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubapi.databinding.ItemUsersBinding
-import com.example.githubapi.model.UsersDTO
 
 class UsersFragmentAdapter
-    : ListAdapter<UsersDTO, UsersFragmentAdapter.UsersViewHolder>(UsersCallback) {
+    : ListAdapter<DomainUserModel, UsersFragmentAdapter.UsersViewHolder>(UsersCallback) {
 
     inner class UsersViewHolder(private val vb: ItemUsersBinding) :
         RecyclerView.ViewHolder(vb.root) {
 
-        fun show(model: UsersDTO) {
+        fun show(model: DomainUserModel) {
             vb.userItemLogin.text = model.login
         }
     }
@@ -33,12 +32,12 @@ class UsersFragmentAdapter
         holder.show(currentList[position])
     }
 
-    companion object UsersCallback : DiffUtil.ItemCallback<UsersDTO>() {
-        override fun areItemsTheSame(oldItem: UsersDTO, newItem: UsersDTO): Boolean {
+    companion object UsersCallback : DiffUtil.ItemCallback<DomainUserModel>() {
+        override fun areItemsTheSame(oldItem: DomainUserModel, newItem: DomainUserModel): Boolean {
             return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: UsersDTO, newItem: UsersDTO): Boolean {
+        override fun areContentsTheSame(oldItem: DomainUserModel, newItem: DomainUserModel): Boolean {
             return oldItem == newItem
         }
     }
