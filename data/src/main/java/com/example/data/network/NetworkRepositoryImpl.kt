@@ -1,6 +1,6 @@
 package com.example.data.network
 
-import com.example.data.NetworkRepository
+import com.example.data.repository.NetworkRepository
 import com.example.data.network.model.RepoDTO
 import com.example.data.network.model.UserDTO
 

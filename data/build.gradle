@@ -28,19 +28,23 @@ android {
     kotlinOptions {
         jvmTarget = Config.jvm_target
     }
+    sourceSets {
+        test.resources.srcDirs += 'src/test/res'
+    }
 }
 
 dependencies {
 
     implementation project(Modules.domain)
 
-    implementation Dependecies.retrofit
+    implementation Dependencies.retrofit
 
-    implementation Dependecies.room_runtime
-    implementation Dependecies.room_ktx
-    kapt Dependecies.room_compiler
+    implementation Dependencies.room_runtime
+    implementation Dependencies.room_ktx
+    kapt Dependencies.room_compiler
 
-    testImplementation Dependecies.junit
-    androidTestImplementation Dependecies.ext_junit
-    androidTestImplementation Dependecies.espresso_core
+    testImplementation TestDependencies.junit
+    testImplementation TestDependencies.mockito_core
+    testImplementation TestDependencies.mockito_kotlin
+    testImplementation TestDependencies.mock_web_server
 }

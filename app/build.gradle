@@ -41,34 +41,34 @@ dependencies {
     implementation project(Modules.domain)
     implementation project(Modules.data)
 
-    implementation Dependecies.dagger
-    kapt Dependecies.dagger_comp
+    implementation Dependencies.dagger
+    kapt Dependencies.dagger_comp
 
-    implementation Dependecies.retrofit
-    implementation Dependecies.retrofit_converter_gson
+    implementation Dependencies.retrofit
+    implementation Dependencies.retrofit_converter_gson
 
-    implementation Dependecies.room_runtime
-    implementation Dependecies.room_ktx
-    kapt Dependecies.room_compiler
+    implementation Dependencies.room_runtime
+    implementation Dependencies.room_ktx
+    kapt Dependencies.room_compiler
 
-    implementation Dependecies.coroutines_core
-    implementation Dependecies.coroutines_android
+    implementation Dependencies.coroutines_core
+    implementation Dependencies.coroutines_android
 
-    implementation Dependecies.navigation_fragment
-    implementation Dependecies.navigation_ui
+    implementation Dependencies.navigation_fragment
+    implementation Dependencies.navigation_ui
 
-    implementation Dependecies.lifecycle_viewmodel_ktx
-    implementation Dependecies.lifecycle_runtime_ktx
-    implementation Dependecies.core_ktx
+    implementation Dependencies.lifecycle_viewmodel_ktx
+    implementation Dependencies.lifecycle_runtime_ktx
+    implementation Dependencies.core_ktx
 
-    implementation Dependecies.okhttp
-    implementation Dependecies.okhttp_logging_interceptor
+    implementation Dependencies.okhttp
+    implementation Dependencies.okhttp_logging_interceptor
 
-    implementation Dependecies.appcompat
-    implementation Dependecies.android_material
-    implementation Dependecies.constraintlayout
+    implementation Dependencies.appcompat
+    implementation Dependencies.android_material
+    implementation Dependencies.constraintlayout
 
-    testImplementation Dependecies.junit
-    androidTestImplementation Dependecies.ext_junit
-    androidTestImplementation Dependecies.espresso_core
+    testImplementation TestDependencies.junit
+    androidTestImplementation TestDependencies.ext_junit
+    androidTestImplementation TestDependencies.espresso_core
 }

@@ -5,10 +5,8 @@ import com.example.domain.models.DomainUserModel
 
 interface DomainRepository {
 
-    suspend fun getUsers(isNetworkAvailable: Boolean): List<DomainUserModel>
-    suspend fun getRepos(
-        isNetworkAvailable: Boolean,
-        url: String,
-        ownerId: String
-    ): List<DomainRepoModel>
+    suspend fun getUsersFromNetwork(): List<DomainUserModel>
+    suspend fun getUsersFromDatabase(): List<DomainUserModel>
+    suspend fun getReposFromNetwork(url: String): List<DomainRepoModel>
+    suspend fun getReposFromDatabase(ownerId: String): List<DomainRepoModel>
 }

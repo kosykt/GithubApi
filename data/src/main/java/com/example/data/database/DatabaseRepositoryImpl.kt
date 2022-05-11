@@ -1,6 +1,6 @@
 package com.example.data.database
 
-import com.example.data.DatabaseRepository
+import com.example.data.repository.DatabaseRepository
 import com.example.data.database.model.RepoEntity
 import com.example.data.database.model.UserEntity
 

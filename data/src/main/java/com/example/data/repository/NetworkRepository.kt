@@ -1,4 +1,4 @@
-package com.example.data
+package com.example.data.repository
 
 import com.example.data.network.model.RepoDTO
 import com.example.data.network.model.UserDTO

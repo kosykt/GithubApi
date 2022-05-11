@@ -1,9 +1,9 @@
 package com.example.githubapi.di.modules.singletones
 
 import android.app.Application
-import com.example.data.DatabaseRepository
-import com.example.data.DomainRepositoryImpl
-import com.example.data.NetworkRepository
+import com.example.data.repository.DatabaseRepository
+import com.example.data.repository.DomainRepositoryImpl
+import com.example.data.repository.NetworkRepository
 import com.example.data.database.AppDatabase
 import com.example.data.database.DatabaseRepositoryImpl
 import com.example.data.network.NetworkRepositoryImpl

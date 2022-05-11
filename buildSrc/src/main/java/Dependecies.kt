@@ -19,7 +19,7 @@ object Releases {
     const val version_name = "1.0"
 }
 
-object Dependecies {
+object Dependencies {
 
     const val dagger = "com.google.dagger:dagger:2.41"
     const val dagger_comp = "com.google.dagger:dagger-compiler:2.41"
@@ -47,8 +47,16 @@ object Dependecies {
     const val appcompat = "androidx.appcompat:appcompat:1.4.1"
     const val android_material = "com.google.android.material:material:1.6.0"
     const val constraintlayout = "androidx.constraintlayout:constraintlayout:2.1.3"
+}
+
+object TestDependencies{
 
     const val junit = "junit:junit:4.13.2"
     const val ext_junit = "androidx.test.ext:junit:1.1.3"
+
+    const val mockito_core = "org.mockito:mockito-core:4.0.0"
+    const val mockito_kotlin = "org.mockito.kotlin:mockito-kotlin:4.0.0"
+    const val mock_web_server = "com.squareup.okhttp3:mockwebserver:4.9.1"
+
     const val espresso_core = "androidx.test.espresso:espresso-core:3.4.0"
 }
