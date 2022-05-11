@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dimen_elevation_item_recycler_card_view">6dp</dimen>
+    <dimen name="dimen_corner_item_recycler_card_view">16dp</dimen>
+    <dimen name="dimen_margin_horizontal_item_recycler_card_view">8dp</dimen>
+    <dimen name="dimen_margin_vertical_item_recycler_card_view">4dp</dimen>
+    <dimen name="dimen_text_size_item_recycler_text_view">24sp</dimen>
+    <dimen name="dimen_margin_item_recycler_text_view">4dp</dimen>
+    <dimen name="dimen_size_users_item_avatar">64dp</dimen>
+    <dimen name="dimen_margin_users_item">4dp</dimen>
+</resources>

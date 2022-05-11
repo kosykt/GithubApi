@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="attrItemRecyclerCardView" format="reference" />
+    <attr name="attrItemRecyclerTextView" format="reference" />
+</resources>

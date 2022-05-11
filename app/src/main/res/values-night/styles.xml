@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="item_recycler_card_view_style.dark_theme">
+        <item name="android:backgroundTint">@color/primaryDarkColor</item>
+    </style>
+
+    <style name="item_recycler_text_view_style.dark_theme">
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+
+</resources>
