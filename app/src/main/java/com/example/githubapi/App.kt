@@ -1,18 +1,47 @@
 package com.example.githubapi
 
 import android.app.Application
+import com.example.githubapi.di.components.AppComponent
+import com.example.githubapi.di.components.DaggerAppComponent
+import com.example.githubapi.di.components.ReposSubcomponent
+import com.example.githubapi.di.components.UsersSubcomponent
+import com.example.githubapi.di.modules.singletones.AppModule
+import com.example.githubapi.ui.reposfragment.ReposSubcomponentProvider
+import com.example.githubapi.ui.usersfragment.UsersSubcomponentProvider
 
-class App: Application() {
+class App : Application(), UsersSubcomponentProvider, ReposSubcomponentProvider {
 
-    override fun onCreate() {
-        super.onCreate()
-        _instance = this
+    private val appComponent: AppComponent by lazy {
+        DaggerAppComponent.builder()
+            .appModule(AppModule(this))
+            .build()
     }
 
-    companion object {
+    private var usersSubcomponent: UsersSubcomponent? = null
+    private var reposSubcomponent: ReposSubcomponent? = null
 
-        private var _instance: App? = null
-        val instance
-            get() = _instance!!
+    override fun initUsersSubcomponent() = appComponent
+        .provideUsersSubcomponent()
+        .also {
+            if (usersSubcomponent == null) {
+                usersSubcomponent = it
+            }
+        }
+
+    override fun destroyUsersSubcomponent() {
+        usersSubcomponent = null
+    }
+
+    override fun initReposSubcomponent() = appComponent
+        .provideUsersSubcomponent()
+        .provideReposSubcomponent()
+        .also {
+            if (reposSubcomponent == null) {
+                reposSubcomponent = it
+            }
+        }
+
+    override fun destroyReposSubcomponent() {
+        reposSubcomponent = null
     }
 }

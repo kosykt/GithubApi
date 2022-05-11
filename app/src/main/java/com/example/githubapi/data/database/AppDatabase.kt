@@ -21,15 +21,4 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract val usersDao: UsersDao
     abstract val reposDao: ReposDao
-
-    companion object {
-
-        private const val DB_NAME = "database.db"
-
-        val instance by lazy {
-            Room.databaseBuilder(App.instance, AppDatabase::class.java, DB_NAME)
-                .fallbackToDestructiveMigration()
-                .build()
-        }
-    }
 }

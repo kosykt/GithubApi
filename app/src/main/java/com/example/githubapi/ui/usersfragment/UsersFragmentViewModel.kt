@@ -2,35 +2,34 @@ package com.example.githubapi.ui.usersfragment
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.githubapi.data.DomainRepositoryImpl
-import com.example.githubapi.data.database.AppDatabase
-import com.example.githubapi.data.database.DatabaseRepositoryImpl
-import com.example.githubapi.data.network.ApiHolder
-import com.example.githubapi.data.network.NetworkRepositoryImpl
 import com.example.githubapi.domain.GetUsersUseCase
 import com.example.githubapi.domain.models.DomainUserModel
+import com.example.githubapi.utils.NetworkObserver
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class UsersFragmentViewModel : ViewModel() {
-
-    private val retrofit = ApiHolder.retrofitService
-    private val database = AppDatabase.instance
-    private val networkRepository = NetworkRepositoryImpl(retrofit)
-    private val databaseRepository = DatabaseRepositoryImpl(database)
-    private val repositoryImpl = DomainRepositoryImpl(networkRepository, databaseRepository)
-    private val getUsersUseCase = GetUsersUseCase(repositoryImpl)
+class UsersFragmentViewModel @Inject constructor(
+    private val getUsersUseCase: GetUsersUseCase,
+    private val networkStatus: NetworkObserver,
+    private val usersSubcomponentProvider: UsersSubcomponentProvider
+) : ViewModel() {
 
     private val _userList = MutableStateFlow<List<DomainUserModel>>(emptyList())
     val userList: StateFlow<List<DomainUserModel>>
         get() = _userList.asStateFlow()
 
-    fun getUsers(isNetworkAvailable: Boolean) {
+    fun getUsers() {
         viewModelScope.launch(Dispatchers.IO) {
-            _userList.value = getUsersUseCase.execute(isNetworkAvailable)
+            _userList.value = getUsersUseCase.execute(networkStatus.networkObserver())
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        usersSubcomponentProvider.destroyUsersSubcomponent()
     }
 }

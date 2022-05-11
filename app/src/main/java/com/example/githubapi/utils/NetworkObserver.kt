@@ -9,14 +9,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import java.lang.ref.WeakReference
 
-class NetworkStatus(_context: Context) {
+class NetworkObserver(_context: Context) {
 
     private val context = WeakReference(_context)
     private val connectivityManager = context.get()?.getSystemService<ConnectivityManager>()
 
     private val networkStatus = MutableLiveData<Boolean>()
 
-    fun networkObserver(): LiveData<Boolean> = networkStatus
+    fun networkObserver(): Boolean = networkStatus.value ?: false
 
     init {
         val request = NetworkRequest.Builder().build()
