@@ -6,14 +6,14 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk Config.compile_sdk
 
     defaultConfig {
-        applicationId "com.example.githubapi"
-        minSdk 27
-        targetSdk 32
-        versionCode 1
-        versionName "1.0"
+        applicationId Config.application_id
+        minSdk Config.min_sdk
+        targetSdk Config.target_sdk
+        versionCode Releases.version_code
+        versionName Releases.version_name
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -25,11 +25,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility Config.java_version
+        targetCompatibility Config.java_version
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = Config.jvm_target
     }
     buildFeatures{
         viewBinding true
@@ -38,34 +38,34 @@ android {
 
 dependencies {
 
-    implementation 'com.google.dagger:dagger:2.41'
-    kapt 'com.google.dagger:dagger-compiler:2.41'
+    implementation Dependecies.dagger
+    kapt Dependecies.dagger_comp
 
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation Dependecies.retrofit
+    implementation Dependecies.retrofit_converter_gson
 
-    implementation 'androidx.room:room-runtime:2.4.2'
-    implementation 'androidx.room:room-ktx:2.4.2'
-    kapt 'androidx.room:room-compiler:2.4.2'
+    implementation Dependecies.room_runtime
+    implementation Dependecies.room_ktx
+    kapt Dependecies.room_compiler
 
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
+    implementation Dependecies.coroutines_core
+    implementation Dependecies.coroutines_android
 
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.2'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.4.2'
+    implementation Dependecies.navigation_fragment
+    implementation Dependecies.navigation_ui
 
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
-    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation Dependecies.lifecycle_viewmodel_ktx
+    implementation Dependecies.lifecycle_runtime_ktx
+    implementation Dependecies.core_ktx
 
-    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3'
+    implementation Dependecies.okhttp
+    implementation Dependecies.okhttp_logging_interceptor
 
-    implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'com.google.android.material:material:1.6.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+    implementation Dependecies.appcompat
+    implementation Dependecies.android_material
+    implementation Dependecies.constraintlayout
 
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    testImplementation Dependecies.junit
+    androidTestImplementation Dependecies.ext_junit
+    androidTestImplementation Dependecies.espresso_core
 }
