@@ -9,5 +9,18 @@
         android:id="@+id/usersFragment"
         android:name="com.example.githubapi.ui.usersfragment.UsersFragment"
         android:label="fragment_users"
-        tools:layout="@layout/fragment_users" />
+        tools:layout="@layout/fragment_users" >
+        <action
+            android:id="@+id/action_usersFragment_to_reposFragment"
+            app:destination="@id/reposFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/reposFragment"
+        android:name="com.example.githubapi.ui.reposfragment.ReposFragment"
+        android:label="fragment_repos"
+        tools:layout="@layout/fragment_repos" >
+        <argument
+            android:name="userInfo"
+            app:argType="string[]" />
+    </fragment>
 </navigation>

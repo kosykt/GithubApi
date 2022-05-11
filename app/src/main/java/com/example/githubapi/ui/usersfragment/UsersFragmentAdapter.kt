@@ -8,14 +8,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.githubapi.databinding.ItemUsersBinding
 import com.example.githubapi.domain.models.DomainUserModel
 
-class UsersFragmentAdapter
-    : ListAdapter<DomainUserModel, UsersFragmentAdapter.UsersViewHolder>(UsersCallback) {
+class UsersFragmentAdapter(
+    private val navigate: (DomainUserModel) -> Unit,
+) : ListAdapter<DomainUserModel, UsersFragmentAdapter.UsersViewHolder>(UsersCallback) {
 
     inner class UsersViewHolder(private val vb: ItemUsersBinding) :
         RecyclerView.ViewHolder(vb.root) {
 
         fun show(model: DomainUserModel) {
-            vb.userItemLogin.text = model.login
+            vb.root.setOnClickListener { navigate(model) }
+            vb.usersItemLogin.text = model.login
         }
     }
 
@@ -38,7 +40,10 @@ class UsersFragmentAdapter
             return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: DomainUserModel, newItem: DomainUserModel): Boolean {
+        override fun areContentsTheSame(
+            oldItem: DomainUserModel,
+            newItem: DomainUserModel
+        ): Boolean {
             return oldItem == newItem
         }
     }

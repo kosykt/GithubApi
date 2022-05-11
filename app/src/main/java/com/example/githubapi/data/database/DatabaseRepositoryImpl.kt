@@ -1,8 +1,8 @@
 package com.example.githubapi.data.database
 
 import com.example.githubapi.data.DatabaseRepository
+import com.example.githubapi.data.database.model.RepoEntity
 import com.example.githubapi.data.database.model.UserEntity
-import kotlinx.coroutines.flow.Flow
 
 class DatabaseRepositoryImpl(
     private val database: AppDatabase
@@ -14,5 +14,13 @@ class DatabaseRepositoryImpl(
 
     override suspend fun getUsers(): List<UserEntity> {
         return database.usersDao.getAll()
+    }
+
+    override suspend fun insertRepos(models: List<RepoEntity>) {
+        database.reposDao.insert(models)
+    }
+
+    override suspend fun getRepos(ownerId: String): List<RepoEntity> {
+        return database.reposDao.getReposByOwnerId(ownerId)
     }
 }
