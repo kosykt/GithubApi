@@ -1,21 +1,18 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
-    id 'androidx.navigation.safeargs'
 }
 
 android {
     compileSdk Config.compile_sdk
 
     defaultConfig {
-        applicationId Config.application_id
         minSdk Config.min_sdk
         targetSdk Config.target_sdk
-        versionCode Releases.version_code
-        versionName Releases.version_name
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -31,42 +28,17 @@ android {
     kotlinOptions {
         jvmTarget = Config.jvm_target
     }
-    buildFeatures{
-        viewBinding true
-    }
 }
 
 dependencies {
 
     implementation project(Modules.domain)
-    implementation project(Modules.data)
-
-    implementation Dependecies.dagger
-    kapt Dependecies.dagger_comp
 
     implementation Dependecies.retrofit
-    implementation Dependecies.retrofit_converter_gson
 
     implementation Dependecies.room_runtime
     implementation Dependecies.room_ktx
     kapt Dependecies.room_compiler
-
-    implementation Dependecies.coroutines_core
-    implementation Dependecies.coroutines_android
-
-    implementation Dependecies.navigation_fragment
-    implementation Dependecies.navigation_ui
-
-    implementation Dependecies.lifecycle_viewmodel_ktx
-    implementation Dependecies.lifecycle_runtime_ktx
-    implementation Dependecies.core_ktx
-
-    implementation Dependecies.okhttp
-    implementation Dependecies.okhttp_logging_interceptor
-
-    implementation Dependecies.appcompat
-    implementation Dependecies.android_material
-    implementation Dependecies.constraintlayout
 
     testImplementation Dependecies.junit
     androidTestImplementation Dependecies.ext_junit

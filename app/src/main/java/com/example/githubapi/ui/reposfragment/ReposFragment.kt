@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.example.githubapi.databinding.FragmentUsersBinding
-import com.example.githubapi.domain.models.DomainRepoModel
+import com.example.domain.models.DomainRepoModel
 import com.example.githubapi.utils.ViewModelFactory
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject

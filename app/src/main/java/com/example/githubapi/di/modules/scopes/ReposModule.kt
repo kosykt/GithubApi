@@ -4,8 +4,8 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import com.example.githubapi.di.annotations.ReposScope
 import com.example.githubapi.di.annotations.ViewModelKey
-import com.example.githubapi.domain.DomainRepository
-import com.example.githubapi.domain.GetReposUseCase
+import com.example.domain.DomainRepository
+import com.example.domain.GetReposUseCase
 import com.example.githubapi.ui.reposfragment.ReposFragmentViewModel
 import com.example.githubapi.ui.reposfragment.ReposSubcomponentProvider
 import dagger.Binds

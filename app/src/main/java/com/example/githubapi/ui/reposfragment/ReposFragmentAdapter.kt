@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubapi.databinding.ItemReposBinding
-import com.example.githubapi.domain.models.DomainRepoModel
+import com.example.domain.models.DomainRepoModel
 
 class ReposFragmentAdapter :
     ListAdapter<DomainRepoModel, ReposFragmentAdapter.ReposViewHolder>(ReposCallback) {

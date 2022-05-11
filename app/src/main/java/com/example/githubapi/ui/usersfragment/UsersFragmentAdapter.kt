@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubapi.databinding.ItemUsersBinding
-import com.example.githubapi.domain.models.DomainUserModel
+import com.example.domain.models.DomainUserModel
 
 class UsersFragmentAdapter(
     private val navigate: (DomainUserModel) -> Unit,
@@ -36,7 +36,10 @@ class UsersFragmentAdapter(
     }
 
     companion object UsersCallback : DiffUtil.ItemCallback<DomainUserModel>() {
-        override fun areItemsTheSame(oldItem: DomainUserModel, newItem: DomainUserModel): Boolean {
+        override fun areItemsTheSame(
+            oldItem: DomainUserModel,
+            newItem: DomainUserModel
+        ): Boolean {
             return oldItem == newItem
         }
 

@@ -4,8 +4,8 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import com.example.githubapi.di.annotations.UsersScope
 import com.example.githubapi.di.annotations.ViewModelKey
-import com.example.githubapi.domain.DomainRepository
-import com.example.githubapi.domain.GetUsersUseCase
+import com.example.domain.DomainRepository
+import com.example.domain.GetUsersUseCase
 import com.example.githubapi.ui.usersfragment.UsersFragmentViewModel
 import com.example.githubapi.ui.usersfragment.UsersSubcomponentProvider
 import dagger.Binds

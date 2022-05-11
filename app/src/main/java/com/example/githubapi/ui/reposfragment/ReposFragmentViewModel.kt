@@ -2,8 +2,8 @@ package com.example.githubapi.ui.reposfragment
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.githubapi.domain.GetReposUseCase
-import com.example.githubapi.domain.models.DomainRepoModel
+import com.example.domain.GetReposUseCase
+import com.example.domain.models.DomainRepoModel
 import com.example.githubapi.utils.NetworkObserver
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

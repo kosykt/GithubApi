@@ -1,14 +1,14 @@
 package com.example.githubapi.di.modules.singletones
 
 import android.app.Application
-import com.example.githubapi.data.DatabaseRepository
-import com.example.githubapi.data.DomainRepositoryImpl
-import com.example.githubapi.data.NetworkRepository
-import com.example.githubapi.data.database.AppDatabase
-import com.example.githubapi.data.database.DatabaseRepositoryImpl
-import com.example.githubapi.data.network.NetworkRepositoryImpl
-import com.example.githubapi.data.network.RetrofitService
-import com.example.githubapi.domain.DomainRepository
+import com.example.data.DatabaseRepository
+import com.example.data.DomainRepositoryImpl
+import com.example.data.NetworkRepository
+import com.example.data.database.AppDatabase
+import com.example.data.database.DatabaseRepositoryImpl
+import com.example.data.network.NetworkRepositoryImpl
+import com.example.data.network.RetrofitService
+import com.example.domain.DomainRepository
 import com.example.githubapi.utils.NetworkObserver
 import dagger.Module
 import dagger.Provides

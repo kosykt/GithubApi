@@ -2,8 +2,8 @@ package com.example.githubapi.ui.usersfragment
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.githubapi.domain.GetUsersUseCase
-import com.example.githubapi.domain.models.DomainUserModel
+import com.example.domain.GetUsersUseCase
+import com.example.domain.models.DomainUserModel
 import com.example.githubapi.utils.NetworkObserver
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

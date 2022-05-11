@@ -1,6 +1,6 @@
 package com.example.githubapi.di.modules.singletones
 
-import com.example.githubapi.data.network.RetrofitService
+import com.example.data.network.RetrofitService
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient

@@ -2,7 +2,7 @@ package com.example.githubapi.di.modules.singletones
 
 import android.app.Application
 import androidx.room.Room
-import com.example.githubapi.data.database.AppDatabase
+import com.example.data.database.AppDatabase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

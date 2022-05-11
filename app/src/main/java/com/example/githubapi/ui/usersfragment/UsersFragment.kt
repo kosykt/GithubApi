@@ -6,12 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.githubapi.databinding.FragmentUsersBinding
-import com.example.githubapi.domain.models.DomainUserModel
+import com.example.domain.models.DomainUserModel
 import com.example.githubapi.utils.ViewModelFactory
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
