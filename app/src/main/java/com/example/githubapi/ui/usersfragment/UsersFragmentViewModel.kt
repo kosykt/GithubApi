@@ -3,8 +3,8 @@ package com.example.githubapi.ui.usersfragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.GetUsersUseCase
-import com.example.domain.models.DomainUserModel
 import com.example.githubapi.utils.NetworkObserver
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,14 +18,25 @@ class UsersFragmentViewModel @Inject constructor(
     private val usersSubcomponentProvider: UsersSubcomponentProvider
 ) : ViewModel() {
 
-    private val _userList = MutableStateFlow<List<DomainUserModel>>(emptyList())
-    val userList: StateFlow<List<DomainUserModel>>
+    private val _userList = MutableStateFlow<UsersState>(UsersState.Success(emptyList()))
+    val userList: StateFlow<UsersState>
         get() = _userList.asStateFlow()
 
     fun getUsers() {
-        viewModelScope.launch(Dispatchers.IO) {
-            _userList.value = getUsersUseCase.execute(networkStatus.networkObserver())
+        _userList.value = UsersState.Loading
+        viewModelScope.launch(
+            Dispatchers.IO
+                    + CoroutineExceptionHandler { _, throwable ->
+                errorCatch(throwable)
+            }
+        ) {
+            _userList.value =
+                UsersState.Success(getUsersUseCase.execute(networkStatus.networkObserver()))
         }
+    }
+
+    private fun errorCatch(throwable: Throwable) {
+        _userList.value = UsersState.Error(throwable.message.toString())
     }
 
     override fun onCleared() {
