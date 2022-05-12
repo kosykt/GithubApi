@@ -10,6 +10,8 @@ import com.example.data.network.NetworkRepositoryImpl
 import com.example.data.network.RetrofitService
 import com.example.domain.DomainRepository
 import com.example.githubapi.utils.NetworkObserver
+import com.example.githubapi.utils.imageloader.AppImageLoader
+import com.example.githubapi.utils.imageloader.CoilImageLoader
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -48,5 +50,11 @@ class AppModule(private val application: Application) {
     @Provides
     fun provideDatabaseRepository(db: AppDatabase): DatabaseRepository {
         return DatabaseRepositoryImpl(db)
+    }
+
+    @Singleton
+    @Provides
+    fun provideAppImageLoader(): AppImageLoader{
+        return CoilImageLoader()
     }
 }

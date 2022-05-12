@@ -44,6 +44,8 @@ dependencies {
     implementation Dependencies.dagger
     kapt Dependencies.dagger_comp
 
+    implementation Dependencies.coil
+
     implementation Dependencies.retrofit
     implementation Dependencies.retrofit_converter_gson
 

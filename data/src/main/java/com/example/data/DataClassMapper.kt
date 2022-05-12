@@ -11,7 +11,8 @@ fun List<UserDTO>.toListDomainUserModel() = this.map {
     DomainUserModel(
         id = it.id,
         login = it.login,
-        repos_url = it.repos_url,
+        reposUrl = it.reposUrl,
+        avatarUrl = it.avatarUrl,
     )
 }
 
@@ -19,16 +20,8 @@ fun List<UserDTO>.toListUserEntity() = this.map {
     UserEntity(
         id = it.id,
         login = it.login,
-        repos_url = it.repos_url,
-    )
-}
-
-@JvmName("toListUserEntityDomainUserModel")
-fun List<DomainUserModel>.toListUserEntity() = this.map {
-    UserEntity(
-        id = it.id,
-        login = it.login,
-        repos_url = it.repos_url,
+        reposUrl = it.reposUrl,
+        avatarUrl = it.avatarUrl,
     )
 }
 
@@ -37,7 +30,8 @@ fun List<UserEntity>.toListDomainUserModel() = this.map {
     DomainUserModel(
         id = it.id,
         login = it.login,
-        repos_url = it.repos_url,
+        reposUrl = it.reposUrl,
+        avatarUrl = it.avatarUrl,
     )
 }
 

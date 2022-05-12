@@ -12,9 +12,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.githubapi.databinding.FragmentUsersBinding
 import com.example.domain.models.DomainUserModel
+import com.example.githubapi.databinding.FragmentUsersBinding
 import com.example.githubapi.utils.ViewModelFactory
+import com.example.githubapi.utils.imageloader.AppImageLoader
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -23,12 +24,15 @@ import javax.inject.Inject
 class UsersFragment : Fragment() {
 
     @Inject
+    lateinit var appImageLoader: AppImageLoader
+
+    @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private val viewModel: UsersFragmentViewModel by lazy {
         ViewModelProvider(this, viewModelFactory)[UsersFragmentViewModel::class.java]
     }
     private val adapter by lazy {
-        UsersFragmentAdapter(this::navigateToReposFragment)
+        UsersFragmentAdapter(this::navigateToReposFragment, appImageLoader)
     }
     private var _binding: FragmentUsersBinding? = null
     private val binding: FragmentUsersBinding
@@ -91,7 +95,7 @@ class UsersFragment : Fragment() {
     private fun navigateToReposFragment(model: DomainUserModel) {
         findNavController().navigate(
             UsersFragmentDirections.actionUsersFragmentToReposFragment(
-                arrayOf(model.repos_url, model.id)
+                arrayOf(model.reposUrl, model.id)
             )
         )
     }

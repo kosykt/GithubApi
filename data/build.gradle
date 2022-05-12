@@ -38,6 +38,7 @@ dependencies {
     implementation project(Modules.domain)
 
     implementation Dependencies.retrofit
+    implementation Dependencies.retrofit_converter_gson
 
     implementation Dependencies.room_runtime
     implementation Dependencies.room_ktx

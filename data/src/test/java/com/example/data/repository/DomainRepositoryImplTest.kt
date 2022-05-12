@@ -33,9 +33,9 @@ class DomainRepositoryImplTest {
     fun should_return_not_null_users_data_if_network_is_available(){
         val domainRepositoryImpl = DomainRepositoryImpl(network, database)
         val testData = listOf(
-            UserDTO(id = "1", login = "1", repos_url = "url"),
-            UserDTO(id = "2", login = "2", repos_url = "url"),
-            UserDTO(id = "3", login = "3", repos_url = "url"),
+            UserDTO(id = "1", login = "1", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            UserDTO(id = "2", login = "2", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            UserDTO(id = "3", login = "3", reposUrl = "repos_url", avatarUrl = "avatar_url"),
         )
         runBlocking {
             Mockito.`when`(network.getUsers()).thenReturn(testData)
@@ -50,9 +50,9 @@ class DomainRepositoryImplTest {
     fun should_return_equals_users_data_if_network_is_available(){
         val domainRepositoryImpl = DomainRepositoryImpl(network, database)
         val testData = listOf(
-            UserDTO(id = "1", login = "1", repos_url = "url"),
-            UserDTO(id = "2", login = "2", repos_url = "url"),
-            UserDTO(id = "3", login = "3", repos_url = "url"),
+            UserDTO(id = "1", login = "1", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            UserDTO(id = "2", login = "2", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            UserDTO(id = "3", login = "3", reposUrl = "repos_url", avatarUrl = "avatar_url"),
         )
         runBlocking {
             Mockito.`when`(network.getUsers()).thenReturn(testData)
@@ -68,9 +68,9 @@ class DomainRepositoryImplTest {
     fun should_return_not_equals_users_data_if_network_is_available(){
         val domainRepositoryImpl = DomainRepositoryImpl(network, database)
         val testData = listOf(
-            UserDTO(id = "1", login = "1", repos_url = "url"),
-            UserDTO(id = "2", login = "2", repos_url = "url"),
-            UserDTO(id = "3", login = "3", repos_url = "url"),
+            UserDTO(id = "1", login = "1", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            UserDTO(id = "2", login = "2", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            UserDTO(id = "3", login = "3", reposUrl = "repos_url", avatarUrl = "avatar_url"),
         )
         runBlocking {
             Mockito.`when`(network.getUsers()).thenReturn(testData)
@@ -86,9 +86,9 @@ class DomainRepositoryImplTest {
     fun verify_users_if_network_is_available(){
         val domainRepositoryImpl = DomainRepositoryImpl(network, database)
         val testData = listOf(
-            UserDTO(id = "1", login = "1", repos_url = "url"),
-            UserDTO(id = "2", login = "2", repos_url = "url"),
-            UserDTO(id = "3", login = "3", repos_url = "url"),
+            UserDTO(id = "1", login = "1", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            UserDTO(id = "2", login = "2", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            UserDTO(id = "3", login = "3", reposUrl = "repos_url", avatarUrl = "avatar_url"),
         )
         runBlocking {
             Mockito.`when`(network.getUsers()).thenReturn(testData)
@@ -106,9 +106,9 @@ class DomainRepositoryImplTest {
     fun should_return_not_null_users_data_if_network_is_lost(){
         val domainRepositoryImpl = DomainRepositoryImpl(network, database)
         val testData = listOf(
-            UserEntity(id = "1", login = "1", repos_url = "url"),
-            UserEntity(id = "2", login = "2", repos_url = "url"),
-            UserEntity(id = "3", login = "3", repos_url = "url"),
+            UserEntity(id = "1", login = "1", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            UserEntity(id = "2", login = "2", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            UserEntity(id = "3", login = "3", reposUrl = "repos_url", avatarUrl = "avatar_url"),
         )
         runBlocking {
             Mockito.`when`(database.getUsers()).thenReturn(testData)
@@ -123,9 +123,9 @@ class DomainRepositoryImplTest {
     fun should_return_equals_users_data_if_network_is_lost(){
         val domainRepositoryImpl = DomainRepositoryImpl(network, database)
         val testData = listOf(
-            UserEntity(id = "1", login = "1", repos_url = "url"),
-            UserEntity(id = "2", login = "2", repos_url = "url"),
-            UserEntity(id = "3", login = "3", repos_url = "url"),
+            UserEntity(id = "1", login = "1", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            UserEntity(id = "2", login = "2", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            UserEntity(id = "3", login = "3", reposUrl = "repos_url", avatarUrl = "avatar_url"),
         )
         runBlocking {
             Mockito.`when`(database.getUsers()).thenReturn(testData)
@@ -141,9 +141,9 @@ class DomainRepositoryImplTest {
     fun should_return_not_equals_users_data_if_network_is_lost(){
         val domainRepositoryImpl = DomainRepositoryImpl(network, database)
         val testData = listOf(
-            UserEntity(id = "1", login = "1", repos_url = "url"),
-            UserEntity(id = "2", login = "2", repos_url = "url"),
-            UserEntity(id = "3", login = "3", repos_url = "url"),
+            UserEntity(id = "1", login = "1", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            UserEntity(id = "2", login = "2", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            UserEntity(id = "3", login = "3", reposUrl = "repos_url", avatarUrl = "avatar_url"),
         )
         runBlocking {
             Mockito.`when`(database.getUsers()).thenReturn(testData)
@@ -159,9 +159,9 @@ class DomainRepositoryImplTest {
     fun verify_users_if_network_is_lost(){
         val domainRepositoryImpl = DomainRepositoryImpl(network, database)
         val testData = listOf(
-            UserEntity(id = "1", login = "1", repos_url = "url"),
-            UserEntity(id = "2", login = "2", repos_url = "url"),
-            UserEntity(id = "3", login = "3", repos_url = "url"),
+            UserEntity(id = "1", login = "1", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            UserEntity(id = "2", login = "2", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            UserEntity(id = "3", login = "3", reposUrl = "repos_url", avatarUrl = "avatar_url"),
         )
         runBlocking {
             Mockito.`when`(database.getUsers()).thenReturn(testData)

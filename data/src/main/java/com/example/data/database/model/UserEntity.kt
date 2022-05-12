@@ -8,5 +8,6 @@ data class UserEntity(
     @PrimaryKey
     val id: String,
     val login: String,
-    val repos_url: String,
+    val reposUrl: String,
+    val avatarUrl: String,
 )

@@ -7,9 +7,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubapi.databinding.ItemUsersBinding
 import com.example.domain.models.DomainUserModel
+import com.example.githubapi.utils.imageloader.AppImageLoader
 
 class UsersFragmentAdapter(
     private val navigate: (DomainUserModel) -> Unit,
+    private val appImageLoader: AppImageLoader,
 ) : ListAdapter<DomainUserModel, UsersFragmentAdapter.UsersViewHolder>(UsersCallback) {
 
     inner class UsersViewHolder(private val vb: ItemUsersBinding) :
@@ -17,6 +19,7 @@ class UsersFragmentAdapter(
 
         fun show(model: DomainUserModel) {
             vb.root.setOnClickListener { navigate(model) }
+            appImageLoader.loadInto(model.avatarUrl, vb.usersItemAvatar)
             vb.usersItemLogin.text = model.login
         }
     }
