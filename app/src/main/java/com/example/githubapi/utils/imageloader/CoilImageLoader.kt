@@ -7,7 +7,6 @@ import com.example.githubapi.R
 
 class CoilImageLoader : AppImageLoader {
 
-
     override fun loadInto(url: String, container: ImageView) {
         container.load(url) {
             target(

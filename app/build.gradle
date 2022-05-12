@@ -73,4 +73,5 @@ dependencies {
     testImplementation TestDependencies.junit
     androidTestImplementation TestDependencies.ext_junit
     androidTestImplementation TestDependencies.espresso_core
+    androidTestImplementation TestDependencies.espresso_contrib
 }

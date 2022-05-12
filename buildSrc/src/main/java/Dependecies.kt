@@ -61,4 +61,5 @@ object TestDependencies{
     const val mock_web_server = "com.squareup.okhttp3:mockwebserver:4.9.1"
 
     const val espresso_core = "androidx.test.espresso:espresso-core:3.4.0"
+    const val espresso_contrib = "androidx.test.espresso:espresso-contrib:3.4.0"
 }
