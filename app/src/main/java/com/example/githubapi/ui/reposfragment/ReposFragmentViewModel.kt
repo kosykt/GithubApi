@@ -3,7 +3,6 @@ package com.example.githubapi.ui.reposfragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.GetReposUseCase
-import com.example.githubapi.utils.NetworkObserver
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +13,6 @@ import javax.inject.Inject
 
 class ReposFragmentViewModel @Inject constructor(
     private val getReposUseCase: GetReposUseCase,
-    private val networkStatus: NetworkObserver,
     private val reposSubcomponentProvider: ReposSubcomponentProvider,
 ) : ViewModel() {
 
@@ -22,7 +20,7 @@ class ReposFragmentViewModel @Inject constructor(
     val reposList: StateFlow<ReposState>
         get() = _reposList.asStateFlow()
 
-    fun getRepos(url: String, ownerId: String) {
+    fun getRepos(networkIsAvailable: Boolean, url: String, ownerId: String) {
         _reposList.value = ReposState.Loading
         viewModelScope.launch(
             Dispatchers.IO
@@ -32,7 +30,7 @@ class ReposFragmentViewModel @Inject constructor(
         ) {
             _reposList.value = ReposState.Success(
                 getReposUseCase.execute(
-                    isNetworkAvailable = networkStatus.networkObserver(),
+                    isNetworkAvailable = networkIsAvailable,
                     url = url,
                     ownerId = ownerId
                 )

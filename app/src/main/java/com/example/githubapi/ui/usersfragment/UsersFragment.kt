@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.domain.models.DomainUserModel
 import com.example.githubapi.databinding.FragmentUsersBinding
+import com.example.githubapi.utils.NetworkObserver
 import com.example.githubapi.utils.ViewModelFactory
 import com.example.githubapi.utils.imageloader.AppImageLoader
 import kotlinx.coroutines.cancelChildren
@@ -25,6 +26,9 @@ class UsersFragment : Fragment() {
 
     @Inject
     lateinit var appImageLoader: AppImageLoader
+
+    @Inject
+    lateinit var networkObserver: NetworkObserver
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -56,7 +60,18 @@ class UsersFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.usersFragmentRecycler.adapter = adapter
-        viewModel.getUsers()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        lifecycleScope.launchWhenCreated {
+            networkObserver.networkIsAvailable()
+                .flowWithLifecycle(lifecycle, Lifecycle.State.CREATED)
+                .distinctUntilChanged()
+                .collectLatest {
+                    viewModel.getUsers(it)
+                }
+        }
     }
 
     override fun onStart() {

@@ -3,7 +3,6 @@ package com.example.githubapi.ui.usersfragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.GetUsersUseCase
-import com.example.githubapi.utils.NetworkObserver
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +13,6 @@ import javax.inject.Inject
 
 class UsersFragmentViewModel @Inject constructor(
     private val getUsersUseCase: GetUsersUseCase,
-    private val networkStatus: NetworkObserver,
     private val usersSubcomponentProvider: UsersSubcomponentProvider
 ) : ViewModel() {
 
@@ -22,7 +20,7 @@ class UsersFragmentViewModel @Inject constructor(
     val userList: StateFlow<UsersState>
         get() = _userList.asStateFlow()
 
-    fun getUsers() {
+    fun getUsers(networkIsAvailable: Boolean) {
         _userList.value = UsersState.Loading
         viewModelScope.launch(
             Dispatchers.IO
@@ -31,7 +29,7 @@ class UsersFragmentViewModel @Inject constructor(
             }
         ) {
             _userList.value =
-                UsersState.Success(getUsersUseCase.execute(networkStatus.networkObserver()))
+                UsersState.Success(getUsersUseCase.execute(networkIsAvailable))
         }
     }
 

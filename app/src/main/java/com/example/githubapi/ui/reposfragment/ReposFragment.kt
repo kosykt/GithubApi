@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.example.domain.models.DomainRepoModel
 import com.example.githubapi.databinding.FragmentUsersBinding
+import com.example.githubapi.utils.NetworkObserver
 import com.example.githubapi.utils.ViewModelFactory
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.flow.collectLatest
@@ -24,6 +25,9 @@ class ReposFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
+
+    @Inject
+    lateinit var networkObserver: NetworkObserver
     private val viewModel: ReposFragmentViewModel by lazy {
         ViewModelProvider(this, viewModelFactory)[ReposFragmentViewModel::class.java]
     }
@@ -53,7 +57,22 @@ class ReposFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.usersFragmentRecycler.adapter = adapter
-        viewModel.getRepos(args.userInfo.first(), args.userInfo.last())
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        lifecycleScope.launchWhenCreated {
+            networkObserver.networkIsAvailable()
+                .flowWithLifecycle(lifecycle, Lifecycle.State.CREATED)
+                .distinctUntilChanged()
+                .collectLatest {
+                    viewModel.getRepos(
+                        networkIsAvailable = it,
+                        url = args.userInfo.first(),
+                        ownerId = args.userInfo.last()
+                    )
+                }
+        }
     }
 
     override fun onStart() {
@@ -69,7 +88,7 @@ class ReposFragment : Fragment() {
     }
 
     private fun renderData(reposState: ReposState) {
-        when (reposState){
+        when (reposState) {
             is ReposState.Success -> {
                 refreshAdapter(reposState.response)
             }

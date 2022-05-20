@@ -5,8 +5,9 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
 import androidx.core.content.getSystemService
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import java.lang.ref.WeakReference
 
 class NetworkObserver(_context: Context) {
@@ -14,9 +15,9 @@ class NetworkObserver(_context: Context) {
     private val context = WeakReference(_context)
     private val connectivityManager = context.get()?.getSystemService<ConnectivityManager>()
 
-    private val networkStatus = MutableLiveData<Boolean>()
+    private val networkStatus = MutableStateFlow<Boolean>(false)
 
-    fun networkObserver(): Boolean = networkStatus.value ?: false
+    fun networkIsAvailable(): StateFlow<Boolean> = networkStatus.asStateFlow()
 
     init {
         val request = NetworkRequest.Builder().build()
@@ -25,17 +26,17 @@ class NetworkObserver(_context: Context) {
             object : ConnectivityManager.NetworkCallback() {
                 override fun onAvailable(network: Network) {
                     super.onAvailable(network)
-                    networkStatus.postValue(true)
+                    networkStatus.value = true
                 }
 
                 override fun onLost(network: Network) {
                     super.onLost(network)
-                    networkStatus.postValue(false)
+                    networkStatus.value = false
                 }
 
                 override fun onUnavailable() {
                     super.onUnavailable()
-                    networkStatus.postValue(false)
+                    networkStatus.value = false
                 }
             }
         )
