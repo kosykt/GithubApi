@@ -12,7 +12,7 @@ class NetworkRepositoryImpl(
         return retrofitService.getUsers()
     }
 
-    override suspend fun getRepos(url: String): List<RepoDTO> {
-        return retrofitService.getRepos(url)
+    override suspend fun getRepos(login: String): List<RepoDTO> {
+        return retrofitService.getRepos(login)
     }
 }

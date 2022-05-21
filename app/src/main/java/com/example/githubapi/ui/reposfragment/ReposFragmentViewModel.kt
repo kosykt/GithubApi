@@ -32,7 +32,7 @@ class ReposFragmentViewModel @Inject constructor(
     val reposList: StateFlow<ReposState>
         get() = _reposList.asStateFlow()
 
-    fun getRepos(networkIsAvailable: Boolean, url: String, ownerId: String) {
+    fun getRepos(networkIsAvailable: Boolean, login: String, ownerId: String) {
         _reposList.value = ReposState.Loading
         viewModelScope.launch(
             Dispatchers.IO
@@ -43,7 +43,7 @@ class ReposFragmentViewModel @Inject constructor(
             _reposList.value = ReposState.Success(
                 getReposUseCase.execute(
                     isNetworkAvailable = networkIsAvailable,
-                    url = url,
+                    login = login,
                     ownerId = ownerId
                 )
             )

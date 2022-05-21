@@ -25,8 +25,8 @@ class DomainRepositoryImpl(
         return databaseRepository.getUsers().toListDomainUserModel()
     }
 
-    override suspend fun getReposFromNetwork(url: String): List<DomainRepoModel> {
-        return networkRepository.getRepos(url).let {
+    override suspend fun getReposFromNetwork(login: String): List<DomainRepoModel> {
+        return networkRepository.getRepos(login).let {
             cacheRepos(it)
             it.toListDomainRepoModel()
         }

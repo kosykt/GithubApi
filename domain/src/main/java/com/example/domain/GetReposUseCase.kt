@@ -7,11 +7,11 @@ class GetReposUseCase(
 ) {
     suspend fun execute(
         isNetworkAvailable: Boolean,
-        url: String,
+        login: String,
         ownerId: String
     ): List<DomainRepoModel> {
         return when (isNetworkAvailable) {
-            true -> repository.getReposFromNetwork(url)
+            true -> repository.getReposFromNetwork(login)
             false -> repository.getReposFromDatabase(ownerId)
         }
     }

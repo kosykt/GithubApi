@@ -111,7 +111,7 @@ class UsersFragment : Fragment() {
     private fun navigateToReposFragment(model: DomainUserModel) {
         findNavController().navigate(
             UsersFragmentDirections.actionUsersFragmentToReposFragment(
-                arrayOf(model.reposUrl, model.id)
+                arrayOf(model.login, model.id)
             )
         )
     }

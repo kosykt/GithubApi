@@ -8,7 +8,7 @@ interface DomainRepository {
 
     suspend fun getUsersFromNetwork(): List<DomainUserModel>
     suspend fun getUsersFromDatabase(): List<DomainUserModel>
-    suspend fun getReposFromNetwork(url: String): List<DomainRepoModel>
+    suspend fun getReposFromNetwork(login: String): List<DomainRepoModel>
     suspend fun getReposFromDatabase(ownerId: String): List<DomainRepoModel>
     suspend fun saveFavouriteUser(user: DomainUserModel)
     suspend fun deleteFavouriteUser(user: DomainUserModel)

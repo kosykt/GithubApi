@@ -67,7 +67,7 @@ class ReposFragment : Fragment() {
                 .collectLatest {
                     viewModel.getRepos(
                         networkIsAvailable = it,
-                        url = args.userInfo.first(),
+                        login = args.userInfo.first(),
                         ownerId = args.userInfo.last()
                     )
                 }
