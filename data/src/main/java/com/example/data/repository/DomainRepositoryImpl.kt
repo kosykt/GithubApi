@@ -1,14 +1,13 @@
 package com.example.data.repository
 
+import com.example.data.*
 import com.example.domain.DomainRepository
 import com.example.domain.models.DomainUserModel
 import com.example.data.network.model.RepoDTO
 import com.example.data.network.model.UserDTO
-import com.example.data.toListDomainRepoModel
-import com.example.data.toListDomainUserModel
-import com.example.data.toListRepoEntity
-import com.example.data.toListUserEntity
 import com.example.domain.models.DomainRepoModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class DomainRepositoryImpl(
     private val networkRepository: NetworkRepository,
@@ -23,7 +22,7 @@ class DomainRepositoryImpl(
     }
 
     override suspend fun getUsersFromDatabase(): List<DomainUserModel> {
-        return  databaseRepository.getUsers().toListDomainUserModel()
+        return databaseRepository.getUsers().toListDomainUserModel()
     }
 
     override suspend fun getReposFromNetwork(url: String): List<DomainRepoModel> {
@@ -35,6 +34,18 @@ class DomainRepositoryImpl(
 
     override suspend fun getReposFromDatabase(ownerId: String): List<DomainRepoModel> {
         return databaseRepository.getRepos(ownerId).toListDomainRepoModel()
+    }
+
+    override suspend fun saveFavouriteUser(user: DomainUserModel) {
+        databaseRepository.saveFavouriteUser(user.toFavouriteUserEntity())
+    }
+
+    override suspend fun deleteFavouriteUser(user: DomainUserModel) {
+        databaseRepository.deleteFavouriteUser(user.toFavouriteUserEntity())
+    }
+
+    override fun getAllFavouriteUsersId(): Flow<List<String>> {
+        return databaseRepository.getAllFavouriteUsers().map { it.toListString() }
     }
 
     private suspend fun cacheRepos(models: List<RepoDTO>) {

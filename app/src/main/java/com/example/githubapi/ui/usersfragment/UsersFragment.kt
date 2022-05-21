@@ -36,7 +36,12 @@ class UsersFragment : Fragment() {
         ViewModelProvider(this, viewModelFactory)[UsersFragmentViewModel::class.java]
     }
     private val adapter by lazy {
-        UsersFragmentAdapter(this::navigateToReposFragment, appImageLoader)
+        UsersFragmentAdapter(
+            navigate = this::navigateToReposFragment,
+            isFavourite = viewModel::isAUserFavourite,
+            favouriteClickHandler = viewModel::favouriteUserClickHandler,
+            appImageLoader = appImageLoader
+        )
     }
     private var _binding: FragmentUsersBinding? = null
     private val binding: FragmentUsersBinding

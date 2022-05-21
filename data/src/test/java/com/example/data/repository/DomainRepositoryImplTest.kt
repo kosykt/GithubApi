@@ -1,7 +1,7 @@
 package com.example.data.repository
 
-import com.example.data.database.model.RepoEntity
-import com.example.data.database.model.UserEntity
+import com.example.data.database.model.HistoryCacheRepoEntity
+import com.example.data.database.model.HistoryCacheUserEntity
 import com.example.data.network.model.RepoDTO
 import com.example.data.network.model.RepoOwner
 import com.example.data.network.model.UserDTO
@@ -106,9 +106,9 @@ class DomainRepositoryImplTest {
     fun should_return_not_null_users_data_if_network_is_lost(){
         val domainRepositoryImpl = DomainRepositoryImpl(network, database)
         val testData = listOf(
-            UserEntity(id = "1", login = "1", reposUrl = "repos_url", avatarUrl = "avatar_url"),
-            UserEntity(id = "2", login = "2", reposUrl = "repos_url", avatarUrl = "avatar_url"),
-            UserEntity(id = "3", login = "3", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            HistoryCacheUserEntity(id = "1", login = "1", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            HistoryCacheUserEntity(id = "2", login = "2", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            HistoryCacheUserEntity(id = "3", login = "3", reposUrl = "repos_url", avatarUrl = "avatar_url"),
         )
         runBlocking {
             Mockito.`when`(database.getUsers()).thenReturn(testData)
@@ -123,9 +123,9 @@ class DomainRepositoryImplTest {
     fun should_return_equals_users_data_if_network_is_lost(){
         val domainRepositoryImpl = DomainRepositoryImpl(network, database)
         val testData = listOf(
-            UserEntity(id = "1", login = "1", reposUrl = "repos_url", avatarUrl = "avatar_url"),
-            UserEntity(id = "2", login = "2", reposUrl = "repos_url", avatarUrl = "avatar_url"),
-            UserEntity(id = "3", login = "3", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            HistoryCacheUserEntity(id = "1", login = "1", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            HistoryCacheUserEntity(id = "2", login = "2", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            HistoryCacheUserEntity(id = "3", login = "3", reposUrl = "repos_url", avatarUrl = "avatar_url"),
         )
         runBlocking {
             Mockito.`when`(database.getUsers()).thenReturn(testData)
@@ -141,9 +141,9 @@ class DomainRepositoryImplTest {
     fun should_return_not_equals_users_data_if_network_is_lost(){
         val domainRepositoryImpl = DomainRepositoryImpl(network, database)
         val testData = listOf(
-            UserEntity(id = "1", login = "1", reposUrl = "repos_url", avatarUrl = "avatar_url"),
-            UserEntity(id = "2", login = "2", reposUrl = "repos_url", avatarUrl = "avatar_url"),
-            UserEntity(id = "3", login = "3", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            HistoryCacheUserEntity(id = "1", login = "1", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            HistoryCacheUserEntity(id = "2", login = "2", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            HistoryCacheUserEntity(id = "3", login = "3", reposUrl = "repos_url", avatarUrl = "avatar_url"),
         )
         runBlocking {
             Mockito.`when`(database.getUsers()).thenReturn(testData)
@@ -159,9 +159,9 @@ class DomainRepositoryImplTest {
     fun verify_users_if_network_is_lost(){
         val domainRepositoryImpl = DomainRepositoryImpl(network, database)
         val testData = listOf(
-            UserEntity(id = "1", login = "1", reposUrl = "repos_url", avatarUrl = "avatar_url"),
-            UserEntity(id = "2", login = "2", reposUrl = "repos_url", avatarUrl = "avatar_url"),
-            UserEntity(id = "3", login = "3", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            HistoryCacheUserEntity(id = "1", login = "1", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            HistoryCacheUserEntity(id = "2", login = "2", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            HistoryCacheUserEntity(id = "3", login = "3", reposUrl = "repos_url", avatarUrl = "avatar_url"),
         )
         runBlocking {
             Mockito.`when`(database.getUsers()).thenReturn(testData)
@@ -252,9 +252,9 @@ class DomainRepositoryImplTest {
     fun should_return_not_null_repos_data_if_network_is_lost(){
         val domainRepositoryImpl = DomainRepositoryImpl(network, database)
         val testData = listOf(
-            RepoEntity(id = "1", ownerId = "1", name = "name"),
-            RepoEntity(id = "2", ownerId = "2", name = "name"),
-            RepoEntity(id = "3", ownerId = "3", name = "name"),
+            HistoryCacheRepoEntity(id = "1", ownerId = "1", name = "name"),
+            HistoryCacheRepoEntity(id = "2", ownerId = "2", name = "name"),
+            HistoryCacheRepoEntity(id = "3", ownerId = "3", name = "name"),
         )
         runBlocking {
             Mockito.`when`(database.getRepos(testOwnerId)).thenReturn(testData)
@@ -269,9 +269,9 @@ class DomainRepositoryImplTest {
     fun should_return_equals_repos_data_if_network_is_lost(){
         val domainRepositoryImpl = DomainRepositoryImpl(network, database)
         val testData = listOf(
-            RepoEntity(id = "1", ownerId = "1", name = "name"),
-            RepoEntity(id = "2", ownerId = "2", name = "name"),
-            RepoEntity(id = "3", ownerId = "3", name = "name"),
+            HistoryCacheRepoEntity(id = "1", ownerId = "1", name = "name"),
+            HistoryCacheRepoEntity(id = "2", ownerId = "2", name = "name"),
+            HistoryCacheRepoEntity(id = "3", ownerId = "3", name = "name"),
         )
         runBlocking {
             Mockito.`when`(database.getRepos(testOwnerId)).thenReturn(testData)
@@ -287,9 +287,9 @@ class DomainRepositoryImplTest {
     fun should_return_not_equals_repos_data_if_network_is_lost(){
         val domainRepositoryImpl = DomainRepositoryImpl(network, database)
         val testData = listOf(
-            RepoEntity(id = "1", ownerId = "1", name = "name"),
-            RepoEntity(id = "2", ownerId = "2", name = "name"),
-            RepoEntity(id = "3", ownerId = "3", name = "name"),
+            HistoryCacheRepoEntity(id = "1", ownerId = "1", name = "name"),
+            HistoryCacheRepoEntity(id = "2", ownerId = "2", name = "name"),
+            HistoryCacheRepoEntity(id = "3", ownerId = "3", name = "name"),
         )
         runBlocking {
             Mockito.`when`(database.getRepos(testOwnerId)).thenReturn(testData)
@@ -305,9 +305,9 @@ class DomainRepositoryImplTest {
     fun verify_repos_if_network_is_lost(){
         val domainRepositoryImpl = DomainRepositoryImpl(network, database)
         val testData = listOf(
-            RepoEntity(id = "1", ownerId = "1", name = "name"),
-            RepoEntity(id = "2", ownerId = "2", name = "name"),
-            RepoEntity(id = "3", ownerId = "3", name = "name"),
+            HistoryCacheRepoEntity(id = "1", ownerId = "1", name = "name"),
+            HistoryCacheRepoEntity(id = "2", ownerId = "2", name = "name"),
+            HistoryCacheRepoEntity(id = "3", ownerId = "3", name = "name"),
         )
         runBlocking {
             Mockito.`when`(database.getRepos(testOwnerId)).thenReturn(testData)

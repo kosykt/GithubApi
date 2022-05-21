@@ -7,14 +7,14 @@ import androidx.room.PrimaryKey
 @Entity(
     foreignKeys = [
         ForeignKey(
-            entity = UserEntity::class,
+            entity = HistoryCacheUserEntity::class,
             parentColumns = ["id"],
             childColumns = ["ownerId"],
             onDelete = ForeignKey.CASCADE
         )
     ]
 )
-data class RepoEntity(
+data class HistoryCacheRepoEntity(
     @PrimaryKey
     val id: String,
     val name: String,

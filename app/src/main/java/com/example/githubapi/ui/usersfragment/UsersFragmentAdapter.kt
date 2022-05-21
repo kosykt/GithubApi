@@ -11,6 +11,8 @@ import com.example.githubapi.utils.imageloader.AppImageLoader
 
 class UsersFragmentAdapter(
     private val navigate: (DomainUserModel) -> Unit,
+    private val isFavourite:(String) -> Boolean,
+    private val favouriteClickHandler: (DomainUserModel) -> Boolean,
     private val appImageLoader: AppImageLoader,
 ) : ListAdapter<DomainUserModel, UsersFragmentAdapter.UsersViewHolder>(UsersCallback) {
 
@@ -21,6 +23,10 @@ class UsersFragmentAdapter(
             vb.root.setOnClickListener { navigate(model) }
             appImageLoader.loadInto(model.avatarUrl, vb.usersItemAvatar)
             vb.usersItemLogin.text = model.login
+            vb.usersItemFavourite.isChecked = isFavourite(model.id)
+            vb.usersItemFavourite.setOnClickListener {
+                vb.usersItemFavourite.isChecked = favouriteClickHandler(model)
+            }
         }
     }
 
