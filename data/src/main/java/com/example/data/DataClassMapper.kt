@@ -13,7 +13,6 @@ fun List<UserDTO>.toListDomainUserModel() = this.map {
     DomainUserModel(
         id = it.id,
         login = it.login,
-        reposUrl = it.reposUrl,
         avatarUrl = it.avatarUrl,
     )
 }
@@ -22,7 +21,6 @@ fun List<UserDTO>.toListUserEntity() = this.map {
     HistoryCacheUserEntity(
         id = it.id,
         login = it.login,
-        reposUrl = it.reposUrl,
         avatarUrl = it.avatarUrl,
     )
 }
@@ -32,7 +30,6 @@ fun List<HistoryCacheUserEntity>.toListDomainUserModel() = this.map {
     DomainUserModel(
         id = it.id,
         login = it.login,
-        reposUrl = it.reposUrl,
         avatarUrl = it.avatarUrl,
     )
 }

@@ -8,6 +8,5 @@ data class HistoryCacheUserEntity(
     @PrimaryKey
     val id: String,
     val login: String,
-    val reposUrl: String,
     val avatarUrl: String,
 )
