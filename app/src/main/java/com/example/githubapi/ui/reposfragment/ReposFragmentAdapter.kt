@@ -5,17 +5,23 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.githubapi.databinding.ItemReposBinding
 import com.example.domain.models.DomainRepoModel
+import com.example.githubapi.databinding.ItemReposBinding
 
-class ReposFragmentAdapter :
-    ListAdapter<DomainRepoModel, ReposFragmentAdapter.ReposViewHolder>(ReposCallback) {
+class ReposFragmentAdapter(
+    private val isFavourite:(String) -> Boolean,
+    private val favouriteClickHandler: (DomainRepoModel) -> Boolean,
+) : ListAdapter<DomainRepoModel, ReposFragmentAdapter.ReposViewHolder>(ReposCallback) {
 
     inner class ReposViewHolder(private val vb: ItemReposBinding) :
         RecyclerView.ViewHolder(vb.root) {
 
         fun show(model: DomainRepoModel) {
             vb.reposItemName.text = model.name
+            vb.reposItemFavourite.isChecked = isFavourite(model.id)
+            vb.reposItemFavourite.setOnClickListener {
+                vb.reposItemFavourite.isChecked = favouriteClickHandler(model)
+            }
         }
     }
 

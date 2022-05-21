@@ -33,7 +33,10 @@ class ReposFragment : Fragment() {
     }
     private val args by navArgs<ReposFragmentArgs>()
     private val adapter by lazy {
-        ReposFragmentAdapter()
+        ReposFragmentAdapter(
+            isFavourite = viewModel::isARepoFavourite,
+            favouriteClickHandler = viewModel::favouriteRepoClickHandler
+        )
     }
     private var _binding: FragmentUsersBinding? = null
     private val binding: FragmentUsersBinding

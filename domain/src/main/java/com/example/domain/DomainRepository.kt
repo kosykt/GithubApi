@@ -13,4 +13,7 @@ interface DomainRepository {
     suspend fun saveFavouriteUser(user: DomainUserModel)
     suspend fun deleteFavouriteUser(user: DomainUserModel)
     fun getAllFavouriteUsersId(): Flow<List<String>>
+    suspend fun saveFavouriteRepo(repoModel: DomainRepoModel)
+    suspend fun deleteFavouriteRepo(repoModel: DomainRepoModel)
+    fun getAllFavouriteReposId(): Flow<List<String>>
 }

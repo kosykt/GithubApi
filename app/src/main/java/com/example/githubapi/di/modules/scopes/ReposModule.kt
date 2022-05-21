@@ -2,10 +2,9 @@ package com.example.githubapi.di.modules.scopes
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
+import com.example.domain.*
 import com.example.githubapi.di.annotations.ReposScope
 import com.example.githubapi.di.annotations.ViewModelKey
-import com.example.domain.DomainRepository
-import com.example.domain.GetReposUseCase
 import com.example.githubapi.ui.reposfragment.ReposFragmentViewModel
 import com.example.githubapi.ui.reposfragment.ReposSubcomponentProvider
 import dagger.Binds
@@ -38,6 +37,30 @@ interface ReposModule {
             application: Application
         ): ReposSubcomponentProvider {
             return (application as ReposSubcomponentProvider)
+        }
+
+        @ReposScope
+        @Provides
+        fun provideSaveFavouriteRepoUseCase(
+            domainRepository: DomainRepository
+        ): SaveFavouriteRepoUseCase{
+            return SaveFavouriteRepoUseCase(domainRepository)
+        }
+
+        @ReposScope
+        @Provides
+        fun provideDeleteFavouriteRepoUseCase(
+            domainRepository: DomainRepository
+        ): DeleteFavouriteRepoUseCase{
+            return DeleteFavouriteRepoUseCase(domainRepository)
+        }
+
+        @ReposScope
+        @Provides
+        fun provideGetAllFavouriteReposIdUseCase(
+            domainRepository: DomainRepository
+        ): GetAllFavouriteReposIdUseCase{
+            return GetAllFavouriteReposIdUseCase(domainRepository)
         }
     }
 }

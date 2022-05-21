@@ -1,5 +1,6 @@
 package com.example.data.database
 
+import com.example.data.database.model.FavouriteReposEntity
 import com.example.data.database.model.FavouriteUserEntity
 import com.example.data.repository.DatabaseRepository
 import com.example.data.database.model.HistoryCacheRepoEntity
@@ -37,4 +38,17 @@ class DatabaseRepositoryImpl(
     override fun getAllFavouriteUsers(): Flow<List<FavouriteUserEntity>> {
         return database.favouriteUserDao.getAll()
     }
+
+    override suspend fun saveFavouriteRepo(reposEntity: FavouriteReposEntity) {
+        database.favouriteReposDao.insert(reposEntity)
+    }
+
+    override suspend fun deleteFavouriteRepo(reposEntity: FavouriteReposEntity) {
+        database.favouriteReposDao.delete(reposEntity)
+    }
+
+    override fun getAllFavouriteRepos(): Flow<List<FavouriteReposEntity>> {
+        return database.favouriteReposDao.getAll()
+    }
+
 }

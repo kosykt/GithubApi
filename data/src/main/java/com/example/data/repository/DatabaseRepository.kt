@@ -1,5 +1,6 @@
 package com.example.data.repository
 
+import com.example.data.database.model.FavouriteReposEntity
 import com.example.data.database.model.FavouriteUserEntity
 import com.example.data.database.model.HistoryCacheRepoEntity
 import com.example.data.database.model.HistoryCacheUserEntity
@@ -14,4 +15,7 @@ interface DatabaseRepository {
     suspend fun saveFavouriteUser(user: FavouriteUserEntity)
     suspend fun deleteFavouriteUser(user: FavouriteUserEntity)
     fun getAllFavouriteUsers(): Flow<List<FavouriteUserEntity>>
+    suspend fun saveFavouriteRepo(reposEntity: FavouriteReposEntity)
+    suspend fun deleteFavouriteRepo(reposEntity: FavouriteReposEntity)
+    fun getAllFavouriteRepos(): Flow<List<FavouriteReposEntity>>
 }

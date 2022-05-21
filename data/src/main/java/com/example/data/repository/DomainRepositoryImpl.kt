@@ -48,6 +48,18 @@ class DomainRepositoryImpl(
         return databaseRepository.getAllFavouriteUsers().map { it.toListString() }
     }
 
+    override suspend fun saveFavouriteRepo(repoModel: DomainRepoModel) {
+        databaseRepository.saveFavouriteRepo(repoModel.toFavouriteReposEntity())
+    }
+
+    override suspend fun deleteFavouriteRepo(repoModel: DomainRepoModel) {
+        databaseRepository.deleteFavouriteRepo(repoModel.toFavouriteReposEntity())
+    }
+
+    override fun getAllFavouriteReposId(): Flow<List<String>> {
+        return databaseRepository.getAllFavouriteRepos().map { it.toListString() }
+    }
+
     private suspend fun cacheRepos(models: List<RepoDTO>) {
         databaseRepository.insertRepos(models.toListRepoEntity())
     }

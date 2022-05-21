@@ -1,5 +1,6 @@
 package com.example.data
 
+import com.example.data.database.model.FavouriteReposEntity
 import com.example.data.database.model.FavouriteUserEntity
 import com.example.data.database.model.HistoryCacheRepoEntity
 import com.example.data.database.model.HistoryCacheUserEntity
@@ -66,5 +67,14 @@ fun DomainUserModel.toFavouriteUserEntity() = FavouriteUserEntity(
 )
 
 fun List<FavouriteUserEntity>.toListString() = this.map {
+    it.id
+}
+
+fun DomainRepoModel.toFavouriteReposEntity() = FavouriteReposEntity(
+    id = this.id
+)
+
+@JvmName("toListStringFavouriteReposEntity")
+fun List<FavouriteReposEntity>.toListString() = this.map {
     it.id
 }
