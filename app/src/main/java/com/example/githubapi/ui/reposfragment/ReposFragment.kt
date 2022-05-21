@@ -60,10 +60,6 @@ class ReposFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.usersFragmentRecycler.adapter = adapter
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         lifecycleScope.launchWhenCreated {
             networkObserver.networkIsAvailable()
                 .flowWithLifecycle(lifecycle, Lifecycle.State.CREATED)
