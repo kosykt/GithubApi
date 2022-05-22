@@ -13,7 +13,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.example.domain.models.DomainRepoModel
-import com.example.githubapi.databinding.FragmentUsersBinding
+import com.example.githubapi.databinding.FragmentReposBinding
 import com.example.githubapi.utils.NetworkObserver
 import com.example.githubapi.utils.ViewModelFactory
 import kotlinx.coroutines.cancelChildren
@@ -38,8 +38,8 @@ class ReposFragment : Fragment() {
             favouriteClickHandler = viewModel::favouriteRepoClickHandler
         )
     }
-    private var _binding: FragmentUsersBinding? = null
-    private val binding: FragmentUsersBinding
+    private var _binding: FragmentReposBinding? = null
+    private val binding: FragmentReposBinding
         get() = _binding ?: throw  RuntimeException("FragmentUsersBinding? = null")
 
     override fun onAttach(context: Context) {
@@ -53,13 +53,13 @@ class ReposFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentUsersBinding.inflate(inflater, container, false)
+        _binding = FragmentReposBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.usersFragmentRecycler.adapter = adapter
+        binding.reposFragmentRecycler.adapter = adapter
         lifecycleScope.launchWhenCreated {
             networkObserver.networkIsAvailable()
                 .flowWithLifecycle(lifecycle, Lifecycle.State.CREATED)

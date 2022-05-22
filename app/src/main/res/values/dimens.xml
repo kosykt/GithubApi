@@ -8,4 +8,6 @@
     <dimen name="dimen_margin_item_recycler_text_view">4dp</dimen>
     <dimen name="dimen_size_users_item_avatar">64dp</dimen>
     <dimen name="dimen_margin_users_item">4dp</dimen>
+    <dimen name="search_padding">6dp</dimen>
+    <dimen name="content_vertical_margin">8dp</dimen>
 </resources>

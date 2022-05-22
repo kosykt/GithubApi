@@ -5,18 +5,13 @@
         <item name="android:backgroundTint">@color/secondaryLightColor</item>
         <item name="android:elevation">@dimen/dimen_elevation_item_recycler_card_view</item>
         <item name="cardCornerRadius">@dimen/dimen_corner_item_recycler_card_view</item>
-        <item name="android:layout_marginStart">@dimen/dimen_margin_horizontal_item_recycler_card_view
-        </item>
-        <item name="android:layout_marginEnd">@dimen/dimen_margin_horizontal_item_recycler_card_view
-        </item>
-        <item name="android:layout_marginTop">@dimen/dimen_margin_vertical_item_recycler_card_view</item>
-        <item name="android:layout_marginBottom">@dimen/dimen_margin_vertical_item_recycler_card_view
-        </item>
     </style>
 
     <style name="item_recycler_text_view_style" parent="">
         <item name="android:layout_margin">@dimen/dimen_margin_item_recycler_text_view</item>
         <item name="android:textColor">@color/textColor</item>
+        <item name="android:maxLines">@integer/integer_item_text_view_max_lines</item>
+        <item name="android:ellipsize">end</item>
         <item name="android:textSize">@dimen/dimen_text_size_item_recycler_text_view</item>
     </style>
 

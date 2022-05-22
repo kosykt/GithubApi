@@ -2,7 +2,7 @@
 <resources>
 
     <style name="item_recycler_card_view_style.dark_theme">
-        <item name="android:backgroundTint">@color/primaryDarkColor</item>
+        <item name="android:backgroundTint">@color/primaryColor</item>
     </style>
 
     <style name="item_recycler_text_view_style.dark_theme">
