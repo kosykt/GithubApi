@@ -12,14 +12,14 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/content_vertical_margin" />
+        app:layout_constraintGuide_begin="@dimen/dimen_content_vertical_margin" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/users_fragment_content_end"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="@dimen/content_vertical_margin" />
+        app:layout_constraintGuide_end="@dimen/dimen_content_vertical_margin" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/users_fragment_recycler"

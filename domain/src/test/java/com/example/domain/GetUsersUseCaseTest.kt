@@ -24,9 +24,9 @@ class GetUsersUseCaseTest {
     fun should_return_not_null_data_if_network_is_available() {
         val useCase = GetUsersUseCase(domainRepository)
         val testData = listOf(
-            DomainUserModel(id = "1", login = "1", reposUrl = "repos_url", avatarUrl = "avatar_url"),
-            DomainUserModel(id = "2", login = "2", reposUrl = "repos_url", avatarUrl = "avatar_url"),
-            DomainUserModel(id = "3", login = "3", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            DomainUserModel(id = "1", login = "1", avatarUrl = "avatar_url"),
+            DomainUserModel(id = "2", login = "2", avatarUrl = "avatar_url"),
+            DomainUserModel(id = "3", login = "3", avatarUrl = "avatar_url"),
         )
         runBlocking {
             Mockito.`when`(domainRepository.getUsersFromNetwork()).thenReturn(testData)
@@ -41,9 +41,9 @@ class GetUsersUseCaseTest {
     fun should_return_equals_data_if_network_is_available() {
         val useCase = GetUsersUseCase(domainRepository)
         val testData = listOf(
-            DomainUserModel(id = "1", login = "1", reposUrl = "repos_url", avatarUrl = "avatar_url"),
-            DomainUserModel(id = "2", login = "2", reposUrl = "repos_url", avatarUrl = "avatar_url"),
-            DomainUserModel(id = "3", login = "3", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            DomainUserModel(id = "1", login = "1", avatarUrl = "avatar_url"),
+            DomainUserModel(id = "2", login = "2", avatarUrl = "avatar_url"),
+            DomainUserModel(id = "3", login = "3", avatarUrl = "avatar_url"),
         )
         runBlocking {
             Mockito.`when`(domainRepository.getUsersFromNetwork()).thenReturn(testData)
@@ -59,9 +59,9 @@ class GetUsersUseCaseTest {
     fun should_return_not_equals_data_if_network_is_available() {
         val useCase = GetUsersUseCase(domainRepository)
         val testData = listOf(
-            DomainUserModel(id = "1", login = "1", reposUrl = "repos_url", avatarUrl = "avatar_url"),
-            DomainUserModel(id = "2", login = "2", reposUrl = "repos_url", avatarUrl = "avatar_url"),
-            DomainUserModel(id = "3", login = "3", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            DomainUserModel(id = "1", login = "1", avatarUrl = "avatar_url"),
+            DomainUserModel(id = "2", login = "2", avatarUrl = "avatar_url"),
+            DomainUserModel(id = "3", login = "3", avatarUrl = "avatar_url"),
         )
         runBlocking {
             Mockito.`when`(domainRepository.getUsersFromNetwork()).thenReturn(testData)
@@ -89,9 +89,9 @@ class GetUsersUseCaseTest {
     fun should_return_not_null_data_if_network_is_lost() {
         val useCase = GetUsersUseCase(domainRepository)
         val testData = listOf(
-            DomainUserModel(id = "1", login = "1", reposUrl = "repos_url", avatarUrl = "avatar_url"),
-            DomainUserModel(id = "2", login = "2", reposUrl = "repos_url", avatarUrl = "avatar_url"),
-            DomainUserModel(id = "3", login = "3", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            DomainUserModel(id = "1", login = "1", avatarUrl = "avatar_url"),
+            DomainUserModel(id = "2", login = "2", avatarUrl = "avatar_url"),
+            DomainUserModel(id = "3", login = "3", avatarUrl = "avatar_url"),
         )
         runBlocking {
             Mockito.`when`(domainRepository.getUsersFromDatabase()).thenReturn(testData)
@@ -106,9 +106,9 @@ class GetUsersUseCaseTest {
     fun should_return_equals_data_if_network_is_lost() {
         val useCase = GetUsersUseCase(domainRepository)
         val testData = listOf(
-            DomainUserModel(id = "1", login = "1", reposUrl = "repos_url", avatarUrl = "avatar_url"),
-            DomainUserModel(id = "2", login = "2", reposUrl = "repos_url", avatarUrl = "avatar_url"),
-            DomainUserModel(id = "3", login = "3", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            DomainUserModel(id = "1", login = "1", avatarUrl = "avatar_url"),
+            DomainUserModel(id = "2", login = "2", avatarUrl = "avatar_url"),
+            DomainUserModel(id = "3", login = "3", avatarUrl = "avatar_url"),
         )
         runBlocking {
             Mockito.`when`(domainRepository.getUsersFromDatabase()).thenReturn(testData)
@@ -124,9 +124,9 @@ class GetUsersUseCaseTest {
     fun should_return_not_equals_data_if_network_is_lost() {
         val useCase = GetUsersUseCase(domainRepository)
         val testData = listOf(
-            DomainUserModel(id = "1", login = "1", reposUrl = "repos_url", avatarUrl = "avatar_url"),
-            DomainUserModel(id = "2", login = "2", reposUrl = "repos_url", avatarUrl = "avatar_url"),
-            DomainUserModel(id = "3", login = "3", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            DomainUserModel(id = "1", login = "1", avatarUrl = "avatar_url"),
+            DomainUserModel(id = "2", login = "2", avatarUrl = "avatar_url"),
+            DomainUserModel(id = "3", login = "3", avatarUrl = "avatar_url"),
         )
         runBlocking {
             Mockito.`when`(domainRepository.getUsersFromDatabase()).thenReturn(testData)

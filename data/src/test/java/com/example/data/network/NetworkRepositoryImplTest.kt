@@ -24,9 +24,9 @@ class NetworkRepositoryImplTest {
     fun should_return_not_null_users_data() {
         val networkRepositoryImpl = NetworkRepositoryImpl(retrofitService)
         val testData = listOf(
-            UserDTO(id = "1", login = "1", reposUrl = "repos_url", avatarUrl = "avatar_url"),
-            UserDTO(id = "2", login = "2", reposUrl = "repos_url", avatarUrl = "avatar_url"),
-            UserDTO(id = "3", login = "3", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            UserDTO(id = "1", login = "1", avatarUrl = "avatar_url"),
+            UserDTO(id = "2", login = "2", avatarUrl = "avatar_url"),
+            UserDTO(id = "3", login = "3", avatarUrl = "avatar_url"),
         )
         runBlocking {
             Mockito.`when`(retrofitService.getUsers()).thenReturn(testData)
@@ -41,9 +41,9 @@ class NetworkRepositoryImplTest {
     fun should_return_equals_users_data() {
         val networkRepositoryImpl = NetworkRepositoryImpl(retrofitService)
         val testData = listOf(
-            UserDTO(id = "1", login = "1", reposUrl = "repos_url", avatarUrl = "avatar_url"),
-            UserDTO(id = "2", login = "2", reposUrl = "repos_url", avatarUrl = "avatar_url"),
-            UserDTO(id = "3", login = "3", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            UserDTO(id = "1", login = "1", avatarUrl = "avatar_url"),
+            UserDTO(id = "2", login = "2", avatarUrl = "avatar_url"),
+            UserDTO(id = "3", login = "3", avatarUrl = "avatar_url"),
         )
         runBlocking {
             Mockito.`when`(retrofitService.getUsers()).thenReturn(testData)
@@ -59,9 +59,9 @@ class NetworkRepositoryImplTest {
     fun should_return_not_equals_users_data() {
         val networkRepositoryImpl = NetworkRepositoryImpl(retrofitService)
         val testData = listOf(
-            UserDTO(id = "1", login = "1", reposUrl = "repos_url", avatarUrl = "avatar_url"),
-            UserDTO(id = "2", login = "2", reposUrl = "repos_url", avatarUrl = "avatar_url"),
-            UserDTO(id = "3", login = "3", reposUrl = "repos_url", avatarUrl = "avatar_url"),
+            UserDTO(id = "1", login = "1", avatarUrl = "avatar_url"),
+            UserDTO(id = "2", login = "2", avatarUrl = "avatar_url"),
+            UserDTO(id = "3", login = "3", avatarUrl = "avatar_url"),
         )
         runBlocking {
             Mockito.`when`(retrofitService.getUsers()).thenReturn(testData)
