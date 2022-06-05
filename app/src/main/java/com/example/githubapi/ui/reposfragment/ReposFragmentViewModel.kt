@@ -1,16 +1,17 @@
 package com.example.githubapi.ui.reposfragment
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.DeleteFavouriteRepoUseCase
 import com.example.domain.GetAllFavouriteReposIdUseCase
 import com.example.domain.GetReposUseCase
 import com.example.domain.SaveFavouriteRepoUseCase
 import com.example.domain.models.DomainRepoModel
-import kotlinx.coroutines.CoroutineExceptionHandler
+import com.example.githubapi.ui.base.BaseViewModel
+import com.example.githubapi.utils.AppState
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 class ReposFragmentViewModel @Inject constructor(
@@ -19,7 +20,7 @@ class ReposFragmentViewModel @Inject constructor(
     private val saveFavouriteRepoUseCase: SaveFavouriteRepoUseCase,
     private val deleteFavouriteRepoUseCase: DeleteFavouriteRepoUseCase,
     getAllFavouriteReposIdUseCase: GetAllFavouriteReposIdUseCase
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val favouriteReposId: StateFlow<List<String>> = getAllFavouriteReposIdUseCase.execute()
         .stateIn(
@@ -28,26 +29,17 @@ class ReposFragmentViewModel @Inject constructor(
             initialValue = emptyList()
         )
 
-    private var _reposList = MutableStateFlow<ReposState>(ReposState.Success(emptyList()))
-    val reposList: StateFlow<ReposState>
-        get() = _reposList.asStateFlow()
-
     fun getRepos(networkIsAvailable: Boolean, login: String, ownerId: String) {
-        _reposList.value = ReposState.Loading
-        viewModelScope.launch(
-            Dispatchers.IO
-                    + CoroutineExceptionHandler { _, throwable ->
-                errorCatch(throwable)
-            }
-        ) {
-            _reposList.value = ReposState.Success(
+        mutableStateFlow.value = AppState.Loading
+        tryLaunch {
+            mutableStateFlow.value = AppState.Success(
                 getReposUseCase.execute(
                     isNetworkAvailable = networkIsAvailable,
                     login = login,
                     ownerId = ownerId
                 )
             )
-        }
+        }.start(Dispatchers.IO)
     }
 
     fun isARepoFavourite(userId: String): Boolean {
@@ -57,22 +49,18 @@ class ReposFragmentViewModel @Inject constructor(
     fun favouriteRepoClickHandler(repoModel: DomainRepoModel): Boolean {
         return when (isARepoFavourite(repoModel.id)) {
             true -> {
-                viewModelScope.launch(Dispatchers.IO) {
+                tryLaunch {
                     deleteFavouriteRepoUseCase.execute(repoModel)
-                }
+                }.start(Dispatchers.IO)
                 false
             }
             false -> {
-                viewModelScope.launch(Dispatchers.IO) {
+                tryLaunch {
                     saveFavouriteRepoUseCase.execute(repoModel)
-                }
+                }.start(Dispatchers.IO)
                 true
             }
         }
-    }
-
-    private fun errorCatch(throwable: Throwable) {
-        _reposList.value = ReposState.Error(throwable.message.toString())
     }
 
     override fun onCleared() {

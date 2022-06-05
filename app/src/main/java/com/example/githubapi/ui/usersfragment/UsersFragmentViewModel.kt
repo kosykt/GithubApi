@@ -1,16 +1,17 @@
 package com.example.githubapi.ui.usersfragment
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.DeleteFavouriteUserUseCase
 import com.example.domain.GetAllFavouriteUsersIdUseCase
 import com.example.domain.GetUsersUseCase
 import com.example.domain.SaveFavouriteUserUseCase
 import com.example.domain.models.DomainUserModel
-import kotlinx.coroutines.CoroutineExceptionHandler
+import com.example.githubapi.ui.base.BaseViewModel
+import com.example.githubapi.utils.AppState
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 class UsersFragmentViewModel @Inject constructor(
@@ -19,7 +20,7 @@ class UsersFragmentViewModel @Inject constructor(
     private val saveFavouriteUserUseCase: SaveFavouriteUserUseCase,
     private val deleteFavouriteUserUseCase: DeleteFavouriteUserUseCase,
     getAllFavouriteUsersIdUseCase: GetAllFavouriteUsersIdUseCase,
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val favouriteUsersId: StateFlow<List<String>> = getAllFavouriteUsersIdUseCase.execute()
         .stateIn(
@@ -28,21 +29,11 @@ class UsersFragmentViewModel @Inject constructor(
             initialValue = emptyList()
         )
 
-    private val _userList = MutableStateFlow<UsersState>(UsersState.Success(emptyList()))
-    val userList: StateFlow<UsersState>
-        get() = _userList.asStateFlow()
-
     fun getUsers(networkIsAvailable: Boolean) {
-        _userList.value = UsersState.Loading
-        viewModelScope.launch(
-            Dispatchers.IO
-                    + CoroutineExceptionHandler { _, throwable ->
-                errorCatch(throwable)
-            }
-        ) {
-            _userList.value =
-                UsersState.Success(getUsersUseCase.execute(networkIsAvailable))
-        }
+        mutableStateFlow.value = AppState.Loading
+        tryLaunch {
+            mutableStateFlow.value = AppState.Success(getUsersUseCase.execute(networkIsAvailable))
+        }.start(Dispatchers.IO)
     }
 
     fun isAUserFavourite(userId: String): Boolean {
@@ -52,22 +43,18 @@ class UsersFragmentViewModel @Inject constructor(
     fun favouriteUserClickHandler(user: DomainUserModel): Boolean {
         return when (isAUserFavourite(user.id)) {
             true -> {
-                viewModelScope.launch(Dispatchers.IO) {
+                tryLaunch {
                     deleteFavouriteUserUseCase.execute(user)
-                }
+                }.start(Dispatchers.IO)
                 false
             }
             false -> {
-                viewModelScope.launch(Dispatchers.IO) {
+                tryLaunch {
                     saveFavouriteUserUseCase.execute(user)
-                }
+                }.start(Dispatchers.IO)
                 true
             }
         }
-    }
-
-    private fun errorCatch(throwable: Throwable) {
-        _userList.value = UsersState.Error(throwable.message.toString())
     }
 
     override fun onCleared() {

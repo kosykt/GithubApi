@@ -2,11 +2,9 @@ package com.example.githubapi.ui.reposfragment
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.flowWithLifecycle
@@ -14,14 +12,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.example.domain.models.DomainRepoModel
 import com.example.githubapi.databinding.FragmentReposBinding
+import com.example.githubapi.ui.base.BaseFragment
+import com.example.githubapi.utils.AppState
 import com.example.githubapi.utils.NetworkObserver
 import com.example.githubapi.utils.ViewModelFactory
-import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import javax.inject.Inject
 
-class ReposFragment : Fragment() {
+class ReposFragment : BaseFragment<FragmentReposBinding>() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -38,9 +37,6 @@ class ReposFragment : Fragment() {
             favouriteClickHandler = viewModel::favouriteRepoClickHandler
         )
     }
-    private var _binding: FragmentReposBinding? = null
-    private val binding: FragmentReposBinding
-        get() = _binding ?: throw  RuntimeException("FragmentUsersBinding? = null")
 
     override fun onAttach(context: Context) {
         (requireActivity().application as ReposSubcomponentProvider)
@@ -49,13 +45,8 @@ class ReposFragment : Fragment() {
         super.onAttach(context)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentReposBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    override fun getViewBinding(container: ViewGroup?) =
+        FragmentReposBinding.inflate(layoutInflater, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -77,7 +68,7 @@ class ReposFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         lifecycleScope.launchWhenStarted {
-            viewModel.reposList
+            viewModel.stateFlow
                 .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
                 .distinctUntilChanged()
                 .collectLatest {
@@ -86,29 +77,21 @@ class ReposFragment : Fragment() {
         }
     }
 
-    private fun renderData(reposState: ReposState) {
-        when (reposState) {
-            is ReposState.Success -> {
-                refreshAdapter(reposState.response)
+    @Suppress("UNCHECKED_CAST")
+    private fun renderData(appState: AppState) {
+        when (appState) {
+            is AppState.Success<*> -> {
+                refreshAdapter(appState.data as List<DomainRepoModel>)
             }
-            is ReposState.Loading -> {
+            is AppState.Loading -> {
                 Toast.makeText(context, "LOADING", Toast.LENGTH_SHORT).show()
             }
-            is ReposState.Error -> {
-                Toast.makeText(context, reposState.error, Toast.LENGTH_SHORT).show()
+            is AppState.Error -> {
+                Toast.makeText(context, appState.error.message.toString(), Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }
 
-    override fun onStop() {
-        super.onStop()
-        lifecycleScope.coroutineContext.cancelChildren()
-    }
-
     private fun refreshAdapter(models: List<DomainRepoModel>) = adapter.submitList(models)
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
 }
