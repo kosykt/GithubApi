@@ -26,9 +26,9 @@ interface UsersModule {
         @UsersScope
         @Provides
         fun provideGetGetUsersUseCase(
-            domainRepository: DomainRepository
+            dataSourceRepository: DataSourceRepository
         ): GetUsersUseCase {
-            return GetUsersUseCase(domainRepository)
+            return GetUsersUseCase(dataSourceRepository)
         }
 
         @UsersScope
@@ -42,25 +42,25 @@ interface UsersModule {
         @UsersScope
         @Provides
         fun provideSaveFavouriteUserUseCase(
-            domainRepository: DomainRepository
+            dataSourceRepository: DataSourceRepository
         ): SaveFavouriteUserUseCase{
-            return SaveFavouriteUserUseCase(domainRepository)
+            return SaveFavouriteUserUseCase(dataSourceRepository)
         }
 
         @UsersScope
         @Provides
         fun provideDeleteFavouriteUserUseCase(
-            domainRepository: DomainRepository
+            dataSourceRepository: DataSourceRepository
         ): DeleteFavouriteUserUseCase{
-            return DeleteFavouriteUserUseCase(domainRepository)
+            return DeleteFavouriteUserUseCase(dataSourceRepository)
         }
 
         @UsersScope
         @Provides
         fun provideGetAllFavouriteUsersIdUseCase(
-            domainRepository: DomainRepository
+            dataSourceRepository: DataSourceRepository
         ): GetAllFavouriteUsersIdUseCase{
-            return GetAllFavouriteUsersIdUseCase(domainRepository)
+            return GetAllFavouriteUsersIdUseCase(dataSourceRepository)
         }
     }
 }

@@ -2,13 +2,13 @@ package com.example.githubapi.di.modules.singletones
 
 import android.app.Application
 import com.example.data.repository.DatabaseRepository
-import com.example.data.repository.DomainRepositoryImpl
+import com.example.data.repository.DataSourceRepositoryImpl
 import com.example.data.repository.NetworkRepository
 import com.example.data.database.AppDatabase
 import com.example.data.database.DatabaseRepositoryImpl
 import com.example.data.network.NetworkRepositoryImpl
 import com.example.data.network.RetrofitService
-import com.example.domain.DomainRepository
+import com.example.domain.DataSourceRepository
 import com.example.githubapi.utils.NetworkObserver
 import com.example.githubapi.utils.imageloader.AppImageLoader
 import com.example.githubapi.utils.imageloader.CoilImageLoader
@@ -33,11 +33,11 @@ class AppModule(private val application: Application) {
 
     @Singleton
     @Provides
-    fun provideDomainRepository(
+    fun provideDataSourceRepository(
         network: NetworkRepository,
         database: DatabaseRepository
-    ): DomainRepository {
-        return DomainRepositoryImpl(network, database)
+    ): DataSourceRepository {
+        return DataSourceRepositoryImpl(network, database)
     }
 
     @Singleton

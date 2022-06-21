@@ -26,9 +26,9 @@ interface ReposModule {
         @ReposScope
         @Provides
         fun provideGetReposUseCase(
-            domainRepository: DomainRepository
+            dataSourceRepository: DataSourceRepository
         ): GetReposUseCase {
-            return GetReposUseCase(domainRepository)
+            return GetReposUseCase(dataSourceRepository)
         }
 
         @ReposScope
@@ -42,25 +42,25 @@ interface ReposModule {
         @ReposScope
         @Provides
         fun provideSaveFavouriteRepoUseCase(
-            domainRepository: DomainRepository
+            dataSourceRepository: DataSourceRepository
         ): SaveFavouriteRepoUseCase{
-            return SaveFavouriteRepoUseCase(domainRepository)
+            return SaveFavouriteRepoUseCase(dataSourceRepository)
         }
 
         @ReposScope
         @Provides
         fun provideDeleteFavouriteRepoUseCase(
-            domainRepository: DomainRepository
+            dataSourceRepository: DataSourceRepository
         ): DeleteFavouriteRepoUseCase{
-            return DeleteFavouriteRepoUseCase(domainRepository)
+            return DeleteFavouriteRepoUseCase(dataSourceRepository)
         }
 
         @ReposScope
         @Provides
         fun provideGetAllFavouriteReposIdUseCase(
-            domainRepository: DomainRepository
+            dataSourceRepository: DataSourceRepository
         ): GetAllFavouriteReposIdUseCase{
-            return GetAllFavouriteReposIdUseCase(domainRepository)
+            return GetAllFavouriteReposIdUseCase(dataSourceRepository)
         }
     }
 }

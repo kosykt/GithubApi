@@ -1,6 +1,6 @@
 package com.example.githubapi.ui.usersfragment
 
-import androidx.lifecycle.viewModelScope
+import android.util.Log
 import com.example.domain.DeleteFavouriteUserUseCase
 import com.example.domain.GetAllFavouriteUsersIdUseCase
 import com.example.domain.GetUsersUseCase
@@ -8,11 +8,13 @@ import com.example.domain.SaveFavouriteUserUseCase
 import com.example.domain.models.DomainUserModel
 import com.example.githubapi.ui.base.BaseViewModel
 import com.example.githubapi.utils.AppState
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
+
+private const val USER_EXCEPTION_TAG = "USER_EXCEPTION_TAG"
 
 class UsersFragmentViewModel @Inject constructor(
     private val getUsersUseCase: GetUsersUseCase,
@@ -24,16 +26,23 @@ class UsersFragmentViewModel @Inject constructor(
 
     private val favouriteUsersId: StateFlow<List<String>> = getAllFavouriteUsersIdUseCase.execute()
         .stateIn(
-            scope = viewModelScope,
+            scope = baseViewModelScope,
             started = SharingStarted.Eagerly,
             initialValue = emptyList()
         )
 
     fun getUsers(networkIsAvailable: Boolean) {
         mutableStateFlow.value = AppState.Loading
-        tryLaunch {
-            mutableStateFlow.value = AppState.Success(getUsersUseCase.execute(networkIsAvailable))
-        }.start(Dispatchers.IO)
+        baseViewModelScope.launch {
+            try {
+                mutableStateFlow.value = AppState.Success(
+                    getUsersUseCase.execute(networkIsAvailable)
+                )
+            } catch (e: Exception) {
+                mutableStateFlow.value = AppState.Error(e)
+                Log.e(USER_EXCEPTION_TAG, e.message.toString())
+            }
+        }
     }
 
     fun isAUserFavourite(userId: String): Boolean {
@@ -43,15 +52,23 @@ class UsersFragmentViewModel @Inject constructor(
     fun favouriteUserClickHandler(user: DomainUserModel): Boolean {
         return when (isAUserFavourite(user.id)) {
             true -> {
-                tryLaunch {
-                    deleteFavouriteUserUseCase.execute(user)
-                }.start(Dispatchers.IO)
+                baseViewModelScope.launch {
+                    try {
+                        deleteFavouriteUserUseCase.execute(user)
+                    } catch (e: Exception) {
+                        Log.e(USER_EXCEPTION_TAG, e.message.toString())
+                    }
+                }
                 false
             }
             false -> {
-                tryLaunch {
-                    saveFavouriteUserUseCase.execute(user)
-                }.start(Dispatchers.IO)
+                baseViewModelScope.launch {
+                    try {
+                        saveFavouriteUserUseCase.execute(user)
+                    } catch (e: Exception) {
+                        Log.e(USER_EXCEPTION_TAG, e.message.toString())
+                    }
+                }
                 true
             }
         }

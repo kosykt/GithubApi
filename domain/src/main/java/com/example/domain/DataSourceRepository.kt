@@ -4,7 +4,7 @@ import com.example.domain.models.DomainRepoModel
 import com.example.domain.models.DomainUserModel
 import kotlinx.coroutines.flow.Flow
 
-interface DomainRepository {
+interface DataSourceRepository {
 
     suspend fun getUsersFromNetwork(): List<DomainUserModel>
     suspend fun getUsersFromDatabase(): List<DomainUserModel>

@@ -1,7 +1,7 @@
 package com.example.data.repository
 
 import com.example.data.*
-import com.example.domain.DomainRepository
+import com.example.domain.DataSourceRepository
 import com.example.domain.models.DomainUserModel
 import com.example.data.network.model.RepoDTO
 import com.example.data.network.model.UserDTO
@@ -9,10 +9,10 @@ import com.example.domain.models.DomainRepoModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class DomainRepositoryImpl(
+class DataSourceRepositoryImpl(
     private val networkRepository: NetworkRepository,
     private val databaseRepository: DatabaseRepository,
-) : DomainRepository {
+) : DataSourceRepository {
 
     override suspend fun getUsersFromNetwork(): List<DomainUserModel> {
         return networkRepository.getUsers().let {

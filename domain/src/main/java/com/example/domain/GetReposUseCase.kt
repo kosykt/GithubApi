@@ -3,7 +3,7 @@ package com.example.domain
 import com.example.domain.models.DomainRepoModel
 
 class GetReposUseCase(
-    private val repository: DomainRepository
+    private val repository: DataSourceRepository
 ) {
     suspend fun execute(
         isNetworkAvailable: Boolean,

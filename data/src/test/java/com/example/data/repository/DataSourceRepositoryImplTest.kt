@@ -16,7 +16,7 @@ import org.junit.Test
 import org.mockito.Mockito
 import org.mockito.kotlin.mock
 
-class DomainRepositoryImplTest {
+class DataSourceRepositoryImplTest {
 
     private val network = mock<NetworkRepository>()
     private val database = mock<DatabaseRepository>()
@@ -31,7 +31,7 @@ class DomainRepositoryImplTest {
 
     @Test
     fun should_return_not_null_users_data_if_network_is_available(){
-        val domainRepositoryImpl = DomainRepositoryImpl(network, database)
+        val domainRepositoryImpl = DataSourceRepositoryImpl(network, database)
         val testData = listOf(
             UserDTO(id = "1", login = "1", avatarUrl = "avatar_url"),
             UserDTO(id = "2", login = "2", avatarUrl = "avatar_url"),
@@ -48,7 +48,7 @@ class DomainRepositoryImplTest {
 
     @Test
     fun should_return_equals_users_data_if_network_is_available(){
-        val domainRepositoryImpl = DomainRepositoryImpl(network, database)
+        val domainRepositoryImpl = DataSourceRepositoryImpl(network, database)
         val testData = listOf(
             UserDTO(id = "1", login = "1", avatarUrl = "avatar_url"),
             UserDTO(id = "2", login = "2", avatarUrl = "avatar_url"),
@@ -66,7 +66,7 @@ class DomainRepositoryImplTest {
 
     @Test
     fun should_return_not_equals_users_data_if_network_is_available(){
-        val domainRepositoryImpl = DomainRepositoryImpl(network, database)
+        val domainRepositoryImpl = DataSourceRepositoryImpl(network, database)
         val testData = listOf(
             UserDTO(id = "1", login = "1", avatarUrl = "avatar_url"),
             UserDTO(id = "2", login = "2", avatarUrl = "avatar_url"),
@@ -84,7 +84,7 @@ class DomainRepositoryImplTest {
 
     @Test
     fun verify_users_if_network_is_available(){
-        val domainRepositoryImpl = DomainRepositoryImpl(network, database)
+        val domainRepositoryImpl = DataSourceRepositoryImpl(network, database)
         val testData = listOf(
             UserDTO(id = "1", login = "1", avatarUrl = "avatar_url"),
             UserDTO(id = "2", login = "2", avatarUrl = "avatar_url"),
@@ -104,7 +104,7 @@ class DomainRepositoryImplTest {
 
     @Test
     fun should_return_not_null_users_data_if_network_is_lost(){
-        val domainRepositoryImpl = DomainRepositoryImpl(network, database)
+        val domainRepositoryImpl = DataSourceRepositoryImpl(network, database)
         val testData = listOf(
             HistoryCacheUserEntity(id = "1", login = "1", avatarUrl = "avatar_url"),
             HistoryCacheUserEntity(id = "2", login = "2", avatarUrl = "avatar_url"),
@@ -121,7 +121,7 @@ class DomainRepositoryImplTest {
 
     @Test
     fun should_return_equals_users_data_if_network_is_lost(){
-        val domainRepositoryImpl = DomainRepositoryImpl(network, database)
+        val domainRepositoryImpl = DataSourceRepositoryImpl(network, database)
         val testData = listOf(
             HistoryCacheUserEntity(id = "1", login = "1", avatarUrl = "avatar_url"),
             HistoryCacheUserEntity(id = "2", login = "2", avatarUrl = "avatar_url"),
@@ -139,7 +139,7 @@ class DomainRepositoryImplTest {
 
     @Test
     fun should_return_not_equals_users_data_if_network_is_lost(){
-        val domainRepositoryImpl = DomainRepositoryImpl(network, database)
+        val domainRepositoryImpl = DataSourceRepositoryImpl(network, database)
         val testData = listOf(
             HistoryCacheUserEntity(id = "1", login = "1", avatarUrl = "avatar_url"),
             HistoryCacheUserEntity(id = "2", login = "2", avatarUrl = "avatar_url"),
@@ -157,7 +157,7 @@ class DomainRepositoryImplTest {
 
     @Test
     fun verify_users_if_network_is_lost(){
-        val domainRepositoryImpl = DomainRepositoryImpl(network, database)
+        val domainRepositoryImpl = DataSourceRepositoryImpl(network, database)
         val testData = listOf(
             HistoryCacheUserEntity(id = "1", login = "1", avatarUrl = "avatar_url"),
             HistoryCacheUserEntity(id = "2", login = "2", avatarUrl = "avatar_url"),
@@ -177,7 +177,7 @@ class DomainRepositoryImplTest {
 
     @Test
     fun should_return_not_null_repos_data_if_network_is_available(){
-        val domainRepositoryImpl = DomainRepositoryImpl(network, database)
+        val domainRepositoryImpl = DataSourceRepositoryImpl(network, database)
         val testData = listOf(
             RepoDTO(id = "1", owner = RepoOwner(id = "1"), name = "name"),
             RepoDTO(id = "2", owner = RepoOwner(id = "2"), name = "name"),
@@ -194,7 +194,7 @@ class DomainRepositoryImplTest {
 
     @Test
     fun should_return_equals_repos_data_if_network_is_available(){
-        val domainRepositoryImpl = DomainRepositoryImpl(network, database)
+        val domainRepositoryImpl = DataSourceRepositoryImpl(network, database)
         val testData = listOf(
             RepoDTO(id = "1", owner = RepoOwner(id = "1"), name = "name"),
             RepoDTO(id = "2", owner = RepoOwner(id = "2"), name = "name"),
@@ -212,7 +212,7 @@ class DomainRepositoryImplTest {
 
     @Test
     fun should_return_not_equals_repos_data_if_network_is_available(){
-        val domainRepositoryImpl = DomainRepositoryImpl(network, database)
+        val domainRepositoryImpl = DataSourceRepositoryImpl(network, database)
         val testData = listOf(
             RepoDTO(id = "1", owner = RepoOwner(id = "1"), name = "name"),
             RepoDTO(id = "2", owner = RepoOwner(id = "2"), name = "name"),
@@ -230,7 +230,7 @@ class DomainRepositoryImplTest {
 
     @Test
     fun verify_repos_if_network_is_available(){
-        val domainRepositoryImpl = DomainRepositoryImpl(network, database)
+        val domainRepositoryImpl = DataSourceRepositoryImpl(network, database)
         val testData = listOf(
             RepoDTO(id = "1", owner = RepoOwner(id = "1"), name = "name"),
             RepoDTO(id = "2", owner = RepoOwner(id = "2"), name = "name"),
@@ -250,7 +250,7 @@ class DomainRepositoryImplTest {
 
     @Test
     fun should_return_not_null_repos_data_if_network_is_lost(){
-        val domainRepositoryImpl = DomainRepositoryImpl(network, database)
+        val domainRepositoryImpl = DataSourceRepositoryImpl(network, database)
         val testData = listOf(
             HistoryCacheRepoEntity(id = "1", ownerId = "1", name = "name"),
             HistoryCacheRepoEntity(id = "2", ownerId = "2", name = "name"),
@@ -267,7 +267,7 @@ class DomainRepositoryImplTest {
 
     @Test
     fun should_return_equals_repos_data_if_network_is_lost(){
-        val domainRepositoryImpl = DomainRepositoryImpl(network, database)
+        val domainRepositoryImpl = DataSourceRepositoryImpl(network, database)
         val testData = listOf(
             HistoryCacheRepoEntity(id = "1", ownerId = "1", name = "name"),
             HistoryCacheRepoEntity(id = "2", ownerId = "2", name = "name"),
@@ -285,7 +285,7 @@ class DomainRepositoryImplTest {
 
     @Test
     fun should_return_not_equals_repos_data_if_network_is_lost(){
-        val domainRepositoryImpl = DomainRepositoryImpl(network, database)
+        val domainRepositoryImpl = DataSourceRepositoryImpl(network, database)
         val testData = listOf(
             HistoryCacheRepoEntity(id = "1", ownerId = "1", name = "name"),
             HistoryCacheRepoEntity(id = "2", ownerId = "2", name = "name"),
@@ -303,7 +303,7 @@ class DomainRepositoryImplTest {
 
     @Test
     fun verify_repos_if_network_is_lost(){
-        val domainRepositoryImpl = DomainRepositoryImpl(network, database)
+        val domainRepositoryImpl = DataSourceRepositoryImpl(network, database)
         val testData = listOf(
             HistoryCacheRepoEntity(id = "1", ownerId = "1", name = "name"),
             HistoryCacheRepoEntity(id = "2", ownerId = "2", name = "name"),

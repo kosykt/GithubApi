@@ -10,7 +10,7 @@ import org.mockito.kotlin.mock
 
 class GetReposUseCaseTest {
 
-    private val domainRepository = mock<DomainRepository>()
+    private val dataSourceRepository = mock<DataSourceRepository>()
     private val testNetworkAvailable = true
     private val testNetworkLost = false
     private val testUrl = "url"
@@ -18,19 +18,19 @@ class GetReposUseCaseTest {
 
     @After
     fun tearDown() {
-        Mockito.reset(domainRepository)
+        Mockito.reset(dataSourceRepository)
     }
 
     @Test
     fun should_return_not_null_data_if_network_is_available() {
-        val useCase = GetReposUseCase(domainRepository)
+        val useCase = GetReposUseCase(dataSourceRepository)
         val testData = listOf(
             DomainRepoModel(id = "1", ownerId = "1", name = "name"),
             DomainRepoModel(id = "2", ownerId = "2", name = "name"),
             DomainRepoModel(id = "3", ownerId = "3", name = "name"),
         )
         runBlocking {
-            Mockito.`when`(domainRepository.getReposFromNetwork(testUrl)).thenReturn(testData)
+            Mockito.`when`(dataSourceRepository.getReposFromNetwork(testUrl)).thenReturn(testData)
             Assert.assertNotNull(
                 "Returned data is null",
                 useCase.execute(testNetworkAvailable, testUrl, testOwnerId)
@@ -40,14 +40,14 @@ class GetReposUseCaseTest {
 
     @Test
     fun should_get_equals_data_if_network_is_available() {
-        val useCase = GetReposUseCase(domainRepository)
+        val useCase = GetReposUseCase(dataSourceRepository)
         val testData = listOf(
             DomainRepoModel(id = "1", ownerId = "1", name = "name"),
             DomainRepoModel(id = "2", ownerId = "2", name = "name"),
             DomainRepoModel(id = "3", ownerId = "3", name = "name"),
         )
         runBlocking {
-            Mockito.`when`(domainRepository.getReposFromNetwork(testUrl)).thenReturn(testData)
+            Mockito.`when`(dataSourceRepository.getReposFromNetwork(testUrl)).thenReturn(testData)
             Assert.assertEquals(
                 "Returned data is not equals",
                 testData,
@@ -58,14 +58,14 @@ class GetReposUseCaseTest {
 
     @Test
     fun should_get_not_equals_data_if_network_is_available() {
-        val useCase = GetReposUseCase(domainRepository)
+        val useCase = GetReposUseCase(dataSourceRepository)
         val testData = listOf(
             DomainRepoModel(id = "1", ownerId = "1", name = "name"),
             DomainRepoModel(id = "2", ownerId = "2", name = "name"),
             DomainRepoModel(id = "3", ownerId = "3", name = "name"),
         )
         runBlocking {
-            Mockito.`when`(domainRepository.getReposFromNetwork(testUrl)).thenReturn(testData)
+            Mockito.`when`(dataSourceRepository.getReposFromNetwork(testUrl)).thenReturn(testData)
             Assert.assertNotEquals(
                 "Returned data is equals",
                 testData,
@@ -76,30 +76,30 @@ class GetReposUseCaseTest {
 
     @Test
     fun verify_if_network_is_available() {
-        val useCase = GetReposUseCase(domainRepository)
+        val useCase = GetReposUseCase(dataSourceRepository)
         runBlocking {
             useCase.execute(testNetworkAvailable, testUrl, testOwnerId)
-            Mockito.verify(domainRepository, Mockito.times(1))
+            Mockito.verify(dataSourceRepository, Mockito.times(1))
                 .getReposFromNetwork(testUrl)
-            Mockito.verify(domainRepository, Mockito.times(0))
+            Mockito.verify(dataSourceRepository, Mockito.times(0))
                 .getReposFromNetwork(testOwnerId)
-            Mockito.verify(domainRepository, Mockito.times(0))
+            Mockito.verify(dataSourceRepository, Mockito.times(0))
                 .getUsersFromNetwork()
-            Mockito.verify(domainRepository, Mockito.times(0))
+            Mockito.verify(dataSourceRepository, Mockito.times(0))
                 .getUsersFromDatabase()
         }
     }
 
     @Test
     fun should_return_not_null_data_if_network_is_lost() {
-        val useCase = GetReposUseCase(domainRepository)
+        val useCase = GetReposUseCase(dataSourceRepository)
         val testData = listOf(
             DomainRepoModel(id = "1", ownerId = "1", name = "name"),
             DomainRepoModel(id = "2", ownerId = "2", name = "name"),
             DomainRepoModel(id = "3", ownerId = "3", name = "name"),
         )
         runBlocking {
-            Mockito.`when`(domainRepository.getReposFromDatabase(testOwnerId)).thenReturn(testData)
+            Mockito.`when`(dataSourceRepository.getReposFromDatabase(testOwnerId)).thenReturn(testData)
             Assert.assertNotNull(
                 "Returned data is null",
                 useCase.execute(testNetworkLost, testUrl, testOwnerId)
@@ -109,14 +109,14 @@ class GetReposUseCaseTest {
 
     @Test
     fun should_get_equals_data_if_network_is_lost() {
-        val useCase = GetReposUseCase(domainRepository)
+        val useCase = GetReposUseCase(dataSourceRepository)
         val testData = listOf(
             DomainRepoModel(id = "1", ownerId = "1", name = "name"),
             DomainRepoModel(id = "2", ownerId = "2", name = "name"),
             DomainRepoModel(id = "3", ownerId = "3", name = "name"),
         )
         runBlocking {
-            Mockito.`when`(domainRepository.getReposFromDatabase(testOwnerId)).thenReturn(testData)
+            Mockito.`when`(dataSourceRepository.getReposFromDatabase(testOwnerId)).thenReturn(testData)
             Assert.assertEquals(
                 "Returned data is not equals",
                 testData,
@@ -127,14 +127,14 @@ class GetReposUseCaseTest {
 
     @Test
     fun should_get_not_equals_data_if_network_is_lost() {
-        val useCase = GetReposUseCase(domainRepository)
+        val useCase = GetReposUseCase(dataSourceRepository)
         val testData = listOf(
             DomainRepoModel(id = "1", ownerId = "1", name = "name"),
             DomainRepoModel(id = "2", ownerId = "2", name = "name"),
             DomainRepoModel(id = "3", ownerId = "3", name = "name"),
         )
         runBlocking {
-            Mockito.`when`(domainRepository.getReposFromDatabase(testOwnerId)).thenReturn(testData)
+            Mockito.`when`(dataSourceRepository.getReposFromDatabase(testOwnerId)).thenReturn(testData)
             Assert.assertNotEquals(
                 "Returned data is equals",
                 testData,
@@ -145,16 +145,16 @@ class GetReposUseCaseTest {
 
     @Test
     fun verify_if_network_is_lost() {
-        val useCase = GetReposUseCase(domainRepository)
+        val useCase = GetReposUseCase(dataSourceRepository)
         runBlocking {
             useCase.execute(testNetworkLost, testUrl, testOwnerId)
-            Mockito.verify(domainRepository, Mockito.times(0))
+            Mockito.verify(dataSourceRepository, Mockito.times(0))
                 .getReposFromNetwork(testUrl)
-            Mockito.verify(domainRepository, Mockito.times(1))
+            Mockito.verify(dataSourceRepository, Mockito.times(1))
                 .getReposFromDatabase(testOwnerId)
-            Mockito.verify(domainRepository, Mockito.times(0))
+            Mockito.verify(dataSourceRepository, Mockito.times(0))
                 .getUsersFromNetwork()
-            Mockito.verify(domainRepository, Mockito.times(0))
+            Mockito.verify(dataSourceRepository, Mockito.times(0))
                 .getUsersFromDatabase()
         }
     }
