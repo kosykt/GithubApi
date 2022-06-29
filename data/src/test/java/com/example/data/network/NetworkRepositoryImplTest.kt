@@ -9,6 +9,7 @@ import org.junit.Assert
 import org.junit.Test
 import org.mockito.Mockito
 import org.mockito.kotlin.mock
+import retrofit2.Response
 
 class NetworkRepositoryImplTest {
 
@@ -29,7 +30,7 @@ class NetworkRepositoryImplTest {
             UserDTO(id = "3", login = "3", avatarUrl = "avatar_url"),
         )
         runBlocking {
-            Mockito.`when`(retrofitService.getUsers()).thenReturn(testData)
+            Mockito.`when`(retrofitService.getUsers()).thenReturn(Response.success(testData))
             Assert.assertNotNull(
                 "Returned data is null",
                 networkRepositoryImpl.getUsers()
@@ -46,11 +47,11 @@ class NetworkRepositoryImplTest {
             UserDTO(id = "3", login = "3", avatarUrl = "avatar_url"),
         )
         runBlocking {
-            Mockito.`when`(retrofitService.getUsers()).thenReturn(testData)
+            Mockito.`when`(retrofitService.getUsers()).thenReturn(Response.success(testData))
             Assert.assertEquals(
                 "Returned data is null",
                 testData,
-                networkRepositoryImpl.getUsers()
+                networkRepositoryImpl.getUsers().body()
             )
         }
     }
@@ -64,11 +65,11 @@ class NetworkRepositoryImplTest {
             UserDTO(id = "3", login = "3", avatarUrl = "avatar_url"),
         )
         runBlocking {
-            Mockito.`when`(retrofitService.getUsers()).thenReturn(testData)
+            Mockito.`when`(retrofitService.getUsers()).thenReturn(Response.success(testData))
             Assert.assertNotEquals(
                 "Returned data is null",
                 testData,
-                networkRepositoryImpl.getUsers().first()
+                networkRepositoryImpl.getUsers()
             )
         }
     }
@@ -93,7 +94,7 @@ class NetworkRepositoryImplTest {
             RepoDTO(id = "3", owner = RepoOwner(id = "3"), name = "name"),
         )
         runBlocking {
-            Mockito.`when`(retrofitService.getRepos(testUrl)).thenReturn(testData)
+            Mockito.`when`(retrofitService.getRepos(testUrl)).thenReturn(Response.success(testData))
             Assert.assertNotNull(
                 "Returned data is null",
                 networkRepositoryImpl.getRepos(testUrl)
@@ -110,11 +111,11 @@ class NetworkRepositoryImplTest {
             RepoDTO(id = "3", owner = RepoOwner(id = "3"), name = "name"),
         )
         runBlocking {
-            Mockito.`when`(retrofitService.getRepos(testUrl)).thenReturn(testData)
+            Mockito.`when`(retrofitService.getRepos(testUrl)).thenReturn(Response.success(testData))
             Assert.assertEquals(
                 "Returned data is null",
                 testData,
-                networkRepositoryImpl.getRepos(testUrl)
+                networkRepositoryImpl.getRepos(testUrl).body()
             )
         }
     }
@@ -128,11 +129,11 @@ class NetworkRepositoryImplTest {
             RepoDTO(id = "3", owner = RepoOwner(id = "3"), name = "name"),
         )
         runBlocking {
-            Mockito.`when`(retrofitService.getRepos(testUrl)).thenReturn(testData)
+            Mockito.`when`(retrofitService.getRepos(testUrl)).thenReturn(Response.success(testData))
             Assert.assertNotEquals(
                 "Returned data is null",
                 testData,
-                networkRepositoryImpl.getRepos(testUrl).first()
+                networkRepositoryImpl.getRepos(testUrl)
             )
         }
     }

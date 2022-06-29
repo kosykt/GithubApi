@@ -29,7 +29,8 @@ class GetUsersUseCaseTest {
             DomainUserModel(id = "3", login = "3", avatarUrl = "avatar_url"),
         )
         runBlocking {
-            Mockito.`when`(dataSourceRepository.getUsersFromNetwork()).thenReturn(testData)
+            Mockito.`when`(dataSourceRepository.getUsersFromNetwork())
+                .thenReturn(UseCaseResponse.Success(testData))
             Assert.assertNotNull(
                 "Returned data is null",
                 useCase.execute(testNetworkAvailable)
@@ -46,10 +47,11 @@ class GetUsersUseCaseTest {
             DomainUserModel(id = "3", login = "3", avatarUrl = "avatar_url"),
         )
         runBlocking {
-            Mockito.`when`(dataSourceRepository.getUsersFromNetwork()).thenReturn(testData)
+            Mockito.`when`(dataSourceRepository.getUsersFromNetwork())
+                .thenReturn(UseCaseResponse.Success(testData))
             Assert.assertEquals(
                 "Returned data is not equals",
-                testData,
+                UseCaseResponse.Success(testData),
                 useCase.execute(testNetworkAvailable)
             )
         }
@@ -64,11 +66,11 @@ class GetUsersUseCaseTest {
             DomainUserModel(id = "3", login = "3", avatarUrl = "avatar_url"),
         )
         runBlocking {
-            Mockito.`when`(dataSourceRepository.getUsersFromNetwork()).thenReturn(testData)
+            Mockito.`when`(dataSourceRepository.getUsersFromNetwork()).thenReturn(UseCaseResponse.Success(testData))
             Assert.assertNotEquals(
                 "Returned data is equals",
-                testData,
-                useCase.execute(testNetworkAvailable).first()
+                UseCaseResponse.Error("test"),
+                useCase.execute(testNetworkAvailable)
             )
         }
     }
@@ -94,10 +96,10 @@ class GetUsersUseCaseTest {
             DomainUserModel(id = "3", login = "3", avatarUrl = "avatar_url"),
         )
         runBlocking {
-            Mockito.`when`(dataSourceRepository.getUsersFromDatabase()).thenReturn(testData)
+            Mockito.`when`(dataSourceRepository.getUsersFromDatabase()).thenReturn(UseCaseResponse.Success(testData))
             Assert.assertNotNull(
                 "Returned data is null",
-                useCase.execute(testNetworkLost).first()
+                useCase.execute(testNetworkLost)
             )
         }
     }
@@ -111,10 +113,10 @@ class GetUsersUseCaseTest {
             DomainUserModel(id = "3", login = "3", avatarUrl = "avatar_url"),
         )
         runBlocking {
-            Mockito.`when`(dataSourceRepository.getUsersFromDatabase()).thenReturn(testData)
+            Mockito.`when`(dataSourceRepository.getUsersFromDatabase()).thenReturn(UseCaseResponse.Success(testData))
             Assert.assertEquals(
                 "Returned data is not equals",
-                testData,
+                UseCaseResponse.Success(testData),
                 useCase.execute(testNetworkLost)
             )
         }
@@ -129,11 +131,11 @@ class GetUsersUseCaseTest {
             DomainUserModel(id = "3", login = "3", avatarUrl = "avatar_url"),
         )
         runBlocking {
-            Mockito.`when`(dataSourceRepository.getUsersFromDatabase()).thenReturn(testData)
+            Mockito.`when`(dataSourceRepository.getUsersFromDatabase()).thenReturn(UseCaseResponse.Success(testData))
             Assert.assertNotEquals(
                 "Returned data is equals",
-                testData,
-                useCase.execute(testNetworkLost).first()
+                UseCaseResponse.Error("test"),
+                useCase.execute(testNetworkLost)
             )
         }
     }

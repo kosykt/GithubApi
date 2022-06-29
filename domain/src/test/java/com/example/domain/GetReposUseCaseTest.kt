@@ -30,7 +30,8 @@ class GetReposUseCaseTest {
             DomainRepoModel(id = "3", ownerId = "3", name = "name"),
         )
         runBlocking {
-            Mockito.`when`(dataSourceRepository.getReposFromNetwork(testUrl)).thenReturn(testData)
+            Mockito.`when`(dataSourceRepository.getReposFromNetwork(testUrl))
+                .thenReturn(UseCaseResponse.Success(testData))
             Assert.assertNotNull(
                 "Returned data is null",
                 useCase.execute(testNetworkAvailable, testUrl, testOwnerId)
@@ -47,10 +48,11 @@ class GetReposUseCaseTest {
             DomainRepoModel(id = "3", ownerId = "3", name = "name"),
         )
         runBlocking {
-            Mockito.`when`(dataSourceRepository.getReposFromNetwork(testUrl)).thenReturn(testData)
+            Mockito.`when`(dataSourceRepository.getReposFromNetwork(testUrl))
+                .thenReturn(UseCaseResponse.Success(testData))
             Assert.assertEquals(
                 "Returned data is not equals",
-                testData,
+                UseCaseResponse.Success(testData),
                 useCase.execute(testNetworkAvailable, testUrl, testOwnerId)
             )
         }
@@ -65,11 +67,12 @@ class GetReposUseCaseTest {
             DomainRepoModel(id = "3", ownerId = "3", name = "name"),
         )
         runBlocking {
-            Mockito.`when`(dataSourceRepository.getReposFromNetwork(testUrl)).thenReturn(testData)
+            Mockito.`when`(dataSourceRepository.getReposFromNetwork(testUrl))
+                .thenReturn(UseCaseResponse.Success(testData))
             Assert.assertNotEquals(
                 "Returned data is equals",
                 testData,
-                useCase.execute(testNetworkAvailable, testUrl, testOwnerId).first()
+                useCase.execute(testNetworkAvailable, testUrl, testOwnerId)
             )
         }
     }
@@ -99,7 +102,8 @@ class GetReposUseCaseTest {
             DomainRepoModel(id = "3", ownerId = "3", name = "name"),
         )
         runBlocking {
-            Mockito.`when`(dataSourceRepository.getReposFromDatabase(testOwnerId)).thenReturn(testData)
+            Mockito.`when`(dataSourceRepository.getReposFromDatabase(testOwnerId))
+                .thenReturn(UseCaseResponse.Success(testData))
             Assert.assertNotNull(
                 "Returned data is null",
                 useCase.execute(testNetworkLost, testUrl, testOwnerId)
@@ -116,10 +120,11 @@ class GetReposUseCaseTest {
             DomainRepoModel(id = "3", ownerId = "3", name = "name"),
         )
         runBlocking {
-            Mockito.`when`(dataSourceRepository.getReposFromDatabase(testOwnerId)).thenReturn(testData)
+            Mockito.`when`(dataSourceRepository.getReposFromDatabase(testOwnerId))
+                .thenReturn(UseCaseResponse.Success(testData))
             Assert.assertEquals(
                 "Returned data is not equals",
-                testData,
+                UseCaseResponse.Success(testData),
                 useCase.execute(testNetworkLost, testUrl, testOwnerId)
             )
         }
@@ -134,11 +139,12 @@ class GetReposUseCaseTest {
             DomainRepoModel(id = "3", ownerId = "3", name = "name"),
         )
         runBlocking {
-            Mockito.`when`(dataSourceRepository.getReposFromDatabase(testOwnerId)).thenReturn(testData)
+            Mockito.`when`(dataSourceRepository.getReposFromDatabase(testOwnerId))
+                .thenReturn(UseCaseResponse.Success(testData))
             Assert.assertNotEquals(
                 "Returned data is equals",
                 testData,
-                useCase.execute(testNetworkLost, testUrl, testOwnerId).first()
+                useCase.execute(testNetworkLost, testUrl, testOwnerId)
             )
         }
     }

@@ -35,7 +35,7 @@ class RetrofitServiceTest : MockWebServerTest() {
         enqueue("response_users.json")
         runBlocking {
             val apiResponse = service.getUsers()
-            Assert.assertTrue("response is empty", apiResponse.isNotEmpty())
+            Assert.assertTrue("response is empty", apiResponse.body()!!.isNotEmpty())
         }
     }
 
@@ -45,7 +45,7 @@ class RetrofitServiceTest : MockWebServerTest() {
         runBlocking {
             val apiResponse = service.getUsers()
             val expected = "1"
-            val actual = apiResponse[0].id
+            val actual = apiResponse.body()!![0].id
             Assert.assertEquals("response id is not correct", expected, actual)
         }
     }

@@ -9,12 +9,14 @@ import com.example.data.toListDomainRepoModel
 import com.example.data.toListDomainUserModel
 import com.example.data.toListRepoEntity
 import com.example.data.toListUserEntity
+import com.example.domain.UseCaseResponse
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert
 import org.junit.Test
 import org.mockito.Mockito
 import org.mockito.kotlin.mock
+import retrofit2.Response
 
 class DataSourceRepositoryImplTest {
 
@@ -38,7 +40,7 @@ class DataSourceRepositoryImplTest {
             UserDTO(id = "3", login = "3", avatarUrl = "avatar_url"),
         )
         runBlocking {
-            Mockito.`when`(network.getUsers()).thenReturn(testData)
+            Mockito.`when`(network.getUsers()).thenReturn(Response.success(testData))
             Assert.assertNotNull(
                 "Returned data is null",
                 domainRepositoryImpl.getUsersFromNetwork()
@@ -55,10 +57,10 @@ class DataSourceRepositoryImplTest {
             UserDTO(id = "3", login = "3", avatarUrl = "avatar_url"),
         )
         runBlocking {
-            Mockito.`when`(network.getUsers()).thenReturn(testData)
+            Mockito.`when`(network.getUsers()).thenReturn(Response.success(testData))
             Assert.assertEquals(
                 "Returned data is not equals",
-                testData.toListDomainUserModel(),
+                UseCaseResponse.Success(testData.toListDomainUserModel()),
                 domainRepositoryImpl.getUsersFromNetwork()
             )
         }
@@ -73,7 +75,7 @@ class DataSourceRepositoryImplTest {
             UserDTO(id = "3", login = "3", avatarUrl = "avatar_url"),
         )
         runBlocking {
-            Mockito.`when`(network.getUsers()).thenReturn(testData)
+            Mockito.`when`(network.getUsers()).thenReturn(Response.success(testData))
             Assert.assertNotEquals(
                 "Returned data is equals",
                 testData,
@@ -91,7 +93,7 @@ class DataSourceRepositoryImplTest {
             UserDTO(id = "3", login = "3", avatarUrl = "avatar_url"),
         )
         runBlocking {
-            Mockito.`when`(network.getUsers()).thenReturn(testData)
+            Mockito.`when`(network.getUsers()).thenReturn(Response.success(testData))
             domainRepositoryImpl.getUsersFromNetwork()
             Mockito.verify(database, Mockito.times(1)).insertUsers(testData.toListUserEntity())
             Mockito.verify(database, Mockito.times(0)).insertRepos(emptyList())
@@ -131,7 +133,7 @@ class DataSourceRepositoryImplTest {
             Mockito.`when`(database.getUsers()).thenReturn(testData)
             Assert.assertEquals(
                 "Returned data is not equals",
-                testData.toListDomainUserModel(),
+                UseCaseResponse.Success(testData.toListDomainUserModel()),
                 domainRepositoryImpl.getUsersFromDatabase()
             )
         }
@@ -184,7 +186,7 @@ class DataSourceRepositoryImplTest {
             RepoDTO(id = "3", owner = RepoOwner(id = "3"), name = "name"),
         )
         runBlocking {
-            Mockito.`when`(network.getRepos(testUrl)).thenReturn(testData)
+            Mockito.`when`(network.getRepos(testUrl)).thenReturn(Response.success(testData))
             Assert.assertNotNull(
                 "Returned data is null",
                 domainRepositoryImpl.getReposFromNetwork(testUrl)
@@ -201,10 +203,10 @@ class DataSourceRepositoryImplTest {
             RepoDTO(id = "3", owner = RepoOwner(id = "3"), name = "name"),
         )
         runBlocking {
-            Mockito.`when`(network.getRepos(testUrl)).thenReturn(testData)
+            Mockito.`when`(network.getRepos(testUrl)).thenReturn(Response.success(testData))
             Assert.assertEquals(
                 "Returned data is not equals",
-                testData.toListDomainRepoModel(),
+                UseCaseResponse.Success(testData.toListDomainRepoModel()),
                 domainRepositoryImpl.getReposFromNetwork(testUrl)
             )
         }
@@ -219,7 +221,7 @@ class DataSourceRepositoryImplTest {
             RepoDTO(id = "3", owner = RepoOwner(id = "3"), name = "name"),
         )
         runBlocking {
-            Mockito.`when`(network.getRepos(testUrl)).thenReturn(testData)
+            Mockito.`when`(network.getRepos(testUrl)).thenReturn(Response.success(testData))
             Assert.assertNotEquals(
                 "Returned data is equals",
                 testData,
@@ -237,7 +239,7 @@ class DataSourceRepositoryImplTest {
             RepoDTO(id = "3", owner = RepoOwner(id = "3"), name = "name"),
         )
         runBlocking {
-            Mockito.`when`(network.getRepos(testUrl)).thenReturn(testData)
+            Mockito.`when`(network.getRepos(testUrl)).thenReturn(Response.success(testData))
             domainRepositoryImpl.getReposFromNetwork(testUrl)
             Mockito.verify(database, Mockito.times(0)).insertUsers(emptyList())
             Mockito.verify(database, Mockito.times(1)).insertRepos(testData.toListRepoEntity())
@@ -277,7 +279,7 @@ class DataSourceRepositoryImplTest {
             Mockito.`when`(database.getRepos(testOwnerId)).thenReturn(testData)
             Assert.assertEquals(
                 "Returned data is not equals",
-                testData.toListDomainRepoModel(),
+                UseCaseResponse.Success(testData.toListDomainRepoModel()),
                 domainRepositoryImpl.getReposFromDatabase(testOwnerId)
             )
         }
