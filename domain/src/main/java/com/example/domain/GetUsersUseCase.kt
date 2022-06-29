@@ -1,11 +1,9 @@
 package com.example.domain
 
-import com.example.domain.models.DomainUserModel
-
 class GetUsersUseCase(
     private val repository: DataSourceRepository
 ) {
-    suspend fun execute(isNetworkAvailable: Boolean): List<DomainUserModel>{
+    suspend fun execute(isNetworkAvailable: Boolean): UseCaseResponse{
         return when(isNetworkAvailable){
             true -> repository.getUsersFromNetwork()
             false -> repository.getUsersFromDatabase()

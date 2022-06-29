@@ -1,10 +1,7 @@
 package com.example.githubapi.ui.reposfragment
 
 import android.util.Log
-import com.example.domain.DeleteFavouriteRepoUseCase
-import com.example.domain.GetAllFavouriteReposIdUseCase
-import com.example.domain.GetReposUseCase
-import com.example.domain.SaveFavouriteRepoUseCase
+import com.example.domain.*
 import com.example.domain.models.DomainRepoModel
 import com.example.githubapi.ui.base.BaseViewModel
 import com.example.githubapi.utils.AppState
@@ -31,19 +28,28 @@ class ReposFragmentViewModel @Inject constructor(
             initialValue = emptyList()
         )
 
+    @Suppress("UNCHECKED_CAST")
     fun getRepos(networkIsAvailable: Boolean, login: String, ownerId: String) {
         mutableStateFlow.value = AppState.Loading
         baseViewModelScope.launch {
             try {
-                mutableStateFlow.value = AppState.Success(
-                    getReposUseCase.execute(
-                        isNetworkAvailable = networkIsAvailable,
-                        login = login,
-                        ownerId = ownerId
-                    )
+                val response = getReposUseCase.execute(
+                    isNetworkAvailable = networkIsAvailable,
+                    login = login,
+                    ownerId = ownerId
                 )
+                when (response) {
+                    is UseCaseResponse.Error -> {
+                        mutableStateFlow.value = AppState.Error(response.message)
+                    }
+                    is UseCaseResponse.Success<*> -> {
+                        mutableStateFlow.value = AppState.Success(
+                            (response.data as List<DomainRepoModel>)
+                        )
+                    }
+                }
             } catch (e: Exception) {
-                mutableStateFlow.value = AppState.Error(e)
+                mutableStateFlow.value = AppState.Error(e.message.toString())
                 Log.e(REPOS_EXCEPTION_TAG, e.message.toString())
             }
         }
@@ -59,7 +65,7 @@ class ReposFragmentViewModel @Inject constructor(
                 baseViewModelScope.launch {
                     try {
                         deleteFavouriteRepoUseCase.execute(repoModel)
-                    }catch (e: Exception) {
+                    } catch (e: Exception) {
                         Log.e(REPOS_EXCEPTION_TAG, e.message.toString())
                     }
                 }
@@ -69,7 +75,7 @@ class ReposFragmentViewModel @Inject constructor(
                 baseViewModelScope.launch {
                     try {
                         saveFavouriteRepoUseCase.execute(repoModel)
-                    }catch (e: Exception) {
+                    } catch (e: Exception) {
                         Log.e(REPOS_EXCEPTION_TAG, e.message.toString())
                     }
                 }

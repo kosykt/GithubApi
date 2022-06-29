@@ -6,10 +6,10 @@ import kotlinx.coroutines.flow.Flow
 
 interface DataSourceRepository {
 
-    suspend fun getUsersFromNetwork(): List<DomainUserModel>
-    suspend fun getUsersFromDatabase(): List<DomainUserModel>
-    suspend fun getReposFromNetwork(login: String): List<DomainRepoModel>
-    suspend fun getReposFromDatabase(ownerId: String): List<DomainRepoModel>
+    suspend fun getUsersFromNetwork(): UseCaseResponse
+    suspend fun getUsersFromDatabase(): UseCaseResponse
+    suspend fun getReposFromNetwork(login: String): UseCaseResponse
+    suspend fun getReposFromDatabase(ownerId: String): UseCaseResponse
     suspend fun saveFavouriteUser(user: DomainUserModel)
     suspend fun deleteFavouriteUser(user: DomainUserModel)
     fun getAllFavouriteUsersId(): Flow<List<String>>

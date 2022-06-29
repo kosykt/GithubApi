@@ -1,11 +1,12 @@
 package com.example.data.repository
 
 import com.example.data.*
-import com.example.domain.DataSourceRepository
-import com.example.domain.models.DomainUserModel
 import com.example.data.network.model.RepoDTO
 import com.example.data.network.model.UserDTO
+import com.example.domain.DataSourceRepository
+import com.example.domain.UseCaseResponse
 import com.example.domain.models.DomainRepoModel
+import com.example.domain.models.DomainUserModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -14,26 +15,60 @@ class DataSourceRepositoryImpl(
     private val databaseRepository: DatabaseRepository,
 ) : DataSourceRepository {
 
-    override suspend fun getUsersFromNetwork(): List<DomainUserModel> {
-        return networkRepository.getUsers().let {
-            cacheUsers(it)
-            it.toListDomainUserModel()
+    override suspend fun getUsersFromNetwork(): UseCaseResponse {
+        try {
+            val response = networkRepository.getUsers()
+            return when {
+                response.isSuccessful && response.body() != null -> {
+                    cacheUsers(response.body()!!)
+                    UseCaseResponse.Success(response.body()!!.toListDomainUserModel())
+                }
+                response.isSuccessful && response.body() == null -> {
+                    UseCaseResponse.Error("Response body is null")
+                }
+                else -> {
+                    UseCaseResponse.Error(response.message())
+                }
+            }
+        } catch (e: Exception) {
+            return UseCaseResponse.Error(e.message.toString())
         }
     }
 
-    override suspend fun getUsersFromDatabase(): List<DomainUserModel> {
-        return databaseRepository.getUsers().toListDomainUserModel()
-    }
-
-    override suspend fun getReposFromNetwork(login: String): List<DomainRepoModel> {
-        return networkRepository.getRepos(login).let {
-            cacheRepos(it)
-            it.toListDomainRepoModel()
+    override suspend fun getUsersFromDatabase(): UseCaseResponse {
+        return try {
+            UseCaseResponse.Success(databaseRepository.getUsers().toListDomainUserModel())
+        } catch (e: Exception) {
+            UseCaseResponse.Error(e.message.toString())
         }
     }
 
-    override suspend fun getReposFromDatabase(ownerId: String): List<DomainRepoModel> {
-        return databaseRepository.getRepos(ownerId).toListDomainRepoModel()
+    override suspend fun getReposFromNetwork(login: String): UseCaseResponse {
+        try {
+            val response = networkRepository.getRepos(login)
+            return when {
+                response.isSuccessful && response.body() != null -> {
+                    cacheRepos(response.body()!!)
+                    UseCaseResponse.Success(response.body()!!.toListDomainRepoModel())
+                }
+                response.isSuccessful && response.body() == null -> {
+                    UseCaseResponse.Error("Response body is null")
+                }
+                else -> {
+                    UseCaseResponse.Error(response.message())
+                }
+            }
+        } catch (e: Exception) {
+            return UseCaseResponse.Error(e.message.toString())
+        }
+    }
+
+    override suspend fun getReposFromDatabase(ownerId: String): UseCaseResponse {
+        return try {
+            UseCaseResponse.Success(databaseRepository.getRepos(ownerId).toListDomainRepoModel())
+        } catch (e: Exception) {
+            UseCaseResponse.Error(e.message.toString())
+        }
     }
 
     override suspend fun saveFavouriteUser(user: DomainUserModel) {

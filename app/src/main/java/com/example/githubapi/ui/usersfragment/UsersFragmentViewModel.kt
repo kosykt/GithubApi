@@ -1,10 +1,7 @@
 package com.example.githubapi.ui.usersfragment
 
 import android.util.Log
-import com.example.domain.DeleteFavouriteUserUseCase
-import com.example.domain.GetAllFavouriteUsersIdUseCase
-import com.example.domain.GetUsersUseCase
-import com.example.domain.SaveFavouriteUserUseCase
+import com.example.domain.*
 import com.example.domain.models.DomainUserModel
 import com.example.githubapi.ui.base.BaseViewModel
 import com.example.githubapi.utils.AppState
@@ -31,15 +28,24 @@ class UsersFragmentViewModel @Inject constructor(
             initialValue = emptyList()
         )
 
+    @Suppress("UNCHECKED_CAST")
     fun getUsers(networkIsAvailable: Boolean) {
         mutableStateFlow.value = AppState.Loading
         baseViewModelScope.launch {
             try {
-                mutableStateFlow.value = AppState.Success(
-                    getUsersUseCase.execute(networkIsAvailable)
-                )
+                val response = getUsersUseCase.execute(networkIsAvailable)
+                when (response) {
+                    is UseCaseResponse.Error -> {
+                        mutableStateFlow.value = AppState.Error(response.message)
+                    }
+                    is UseCaseResponse.Success<*> -> {
+                        mutableStateFlow.value = AppState.Success(
+                            (response.data as List<DomainUserModel>)
+                        )
+                    }
+                }
             } catch (e: Exception) {
-                mutableStateFlow.value = AppState.Error(e)
+                mutableStateFlow.value = AppState.Error(e.message.toString())
                 Log.e(USER_EXCEPTION_TAG, e.message.toString())
             }
         }

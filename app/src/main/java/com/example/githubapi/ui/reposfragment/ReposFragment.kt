@@ -87,8 +87,7 @@ class ReposFragment : BaseFragment<FragmentReposBinding>() {
                 Toast.makeText(context, "LOADING", Toast.LENGTH_SHORT).show()
             }
             is AppState.Error -> {
-                Toast.makeText(context, appState.error.message.toString(), Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(context, appState.error, Toast.LENGTH_SHORT).show()
             }
         }
     }
