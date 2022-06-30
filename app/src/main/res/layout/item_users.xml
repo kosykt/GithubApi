@@ -20,7 +20,7 @@
             app:layout_constraintEnd_toStartOf="@+id/user_item_barrier"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_launcher_background" />
+            tools:src="@drawable/ic_baseline_place_holder" />
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/user_item_barrier"

@@ -84,12 +84,14 @@ class UsersFragment : BaseFragment<FragmentUsersBinding>() {
         when (appState) {
             is AppState.Success<*> -> {
                 refreshAdapter(appState.data as List<DomainUserModel>)
+                binding.usersProgressBar.visibility = View.GONE
             }
             is AppState.Loading -> {
-                Toast.makeText(context, "LOADING", Toast.LENGTH_SHORT).show()
+                binding.usersProgressBar.visibility = View.VISIBLE
             }
             is AppState.Error -> {
                 Toast.makeText(context, appState.error, Toast.LENGTH_SHORT).show()
+                binding.usersProgressBar.visibility = View.GONE
             }
         }
     }

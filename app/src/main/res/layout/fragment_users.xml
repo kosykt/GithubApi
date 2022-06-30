@@ -32,4 +32,17 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/item_users" />
 
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/users_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:indicatorColor="@color/teal_200"
+        app:indicatorSize="200dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
